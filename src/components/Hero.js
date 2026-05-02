@@ -12,21 +12,13 @@ function Hero() {
   };
 
   return (
-    <section className="hero">
-      <video 
-        className="hero-video"
-        autoPlay 
-        muted 
-        loop
-        playsInline
-      >
-        <source 
-          src="https://videos.pexels.com/video-files/3571904/3571904-sd_640_360_25fps.mp4" 
-          type="video/mp4"
-        />
-      </video>
-      
+    <section
+      className="hero"
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/hero.png)` }}
+    >
       <div className="hero-overlay"></div>
+      <div className="floating-soft" style={{ width: 260, height: 260, left: '8%', top: '18%', background: 'radial-gradient(circle, rgba(202,108,230,0.12), transparent 40%)' }} />
+      <div className="floating-soft" style={{ width: 320, height: 320, right: '6%', bottom: '8%', background: 'radial-gradient(circle, rgba(35,6,41,0.08), transparent 40%)', animationDelay: '2s' }} />
       
       <div className="hero-content">
         <div className="hero-text">

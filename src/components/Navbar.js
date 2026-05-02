@@ -1,48 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import '../styles/navbar.css';
+import PillNav from './PillNav';
 
 function Navbar({ cartCount }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const items = [
+    { label: 'Home', href: '/' },
+    { label: 'Shop', href: '/products' }
+  ];
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          <img src="/hazto_logo.jpg" alt="HAZTO LABEL" className="logo-image" />
-        </Link>
+        <PillNav
+          logo={'/hazto_logo.jpg'}
+          logoAlt={'HAZTO LABEL'}
+          items={items}
+          activeHref={location.pathname}
+          className="custom-nav"
+          ease={'power2.easeOut'}
+          baseColor={'transparent'}
+          pillColor={'rgba(255,255,255,0.04)'}
+          hoveredPillTextColor={'#ffffff'}
+          pillTextColor={'rgba(255,255,255,0.95)'}
+          initialLoadAnimation={false}
+        />
 
-        <button 
-          className="mobile-menu-toggle"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
-          <Link 
-            to="/" 
-            className={`nav-link ${isActive('/') ? 'active' : ''}`}
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </Link>
-          <Link 
-            to="/products" 
-            className={`nav-link ${isActive('/products') ? 'active' : ''}`}
-            onClick={() => setIsOpen(false)}
-          >
-            Shop
-          </Link>
-          <Link 
-            to="/cart" 
-            className="nav-link cart-link"
-            onClick={() => setIsOpen(false)}
-          >
+        <div className="nav-actions">
+          <Link to="/cart" className="nav-link cart-link">
             <ShoppingCart size={20} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </Link>

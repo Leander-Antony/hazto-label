@@ -8,6 +8,7 @@
   --primary-dark: #230629;
   --primary-light: #ffe7c1;
   --accent-color: #ca6ce6;
+  --ease: cubic-bezier(0.2, 0.9, 0.2, 1);
   --border-light: #e8d5c4;
   --text-primary: #230629;
   --text-secondary: #6b5b7f;
@@ -26,6 +27,29 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 400ms var(--ease), color 400ms var(--ease);
+}
+
+/* Subtle grain overlay and global depth */
+body::after {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='a'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23a)' opacity='0.04' /></svg>");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  z-index: 999;
+}
+
+/* Page transition helper */
+.page-enter {
+  animation: pageIn 420ms var(--ease) both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Typography */
@@ -70,6 +94,21 @@ h3 {
   background-color: var(--accent-color);
   transform: translateY(-2px);
   box-shadow: var(--shadow);
+}
+
+/* Click feedback */
+.btn:active, .overlay-btn:active, .quick-add:active {
+  transform: scale(0.98);
+  transition: transform 90ms ease;
+}
+
+/* Links micro-interaction */
+a {
+  transition: color 260ms var(--ease), transform 260ms var(--ease);
+}
+
+a:active {
+  transform: translateY(1px) scale(0.998);
 }
 
 .btn-outline {

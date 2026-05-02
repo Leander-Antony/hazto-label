@@ -6,16 +6,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.hero-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
+  background-color: var(--primary-dark);
+  /* slow gentle background zoom */
+  background-size: cover;
+  background-position: center;
+  animation: bgZoom 30s linear infinite alternate;
 }
 
 .hero-overlay {
@@ -26,6 +21,38 @@
   height: 100%;
   background: linear-gradient(135deg, rgba(35, 6, 41, 0.6), rgba(202, 108, 230, 0.3));
   z-index: 2;
+}
+
+/* Vignette */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.25) 100%);
+  mix-blend-mode: multiply;
+  z-index: 4;
+}
+
+@keyframes bgZoom {
+  from { background-size: 102% auto; }
+  to { background-size: 108% auto; }
+}
+
+/* Floating soft elements for depth (used via pseudo elements or additional markup) */
+.floating-soft {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0.12;
+  animation: floatY 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes floatY {
+  from { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+  to { transform: translateY(0); }
 }
 
 .hero-content {
