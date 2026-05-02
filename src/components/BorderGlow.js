@@ -140,14 +140,9 @@ const BorderGlow = ({
         '--card-bg': backgroundColor,
         '--edge-sensitivity': edgeSensitivity,
         '--border-radius': `${borderRadius}px`,
-        '--glow-padding': `${glowRadius}px`,
-        '--cone-spread': coneSpread,
-        '--fill-opacity': fillOpacity,
-        ...glowVars,
-        ...buildGradientVars(colors),
+        '--glow-color': glowColor,
       }}
     >
-      <span className="edge-light" />
       <div className="border-glow-inner">
         {children}
       </div>

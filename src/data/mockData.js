@@ -7,6 +7,12 @@ export const mockProducts = [
     mood: "Soft",
     description: "Minimalist linen t-shirt in soft beige. Perfect for everyday wear with a dreamy aesthetic.",
     image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Beige", "Off-white", "Cream"]
   },
@@ -18,6 +24,11 @@ export const mockProducts = [
     mood: "Dark",
     description: "Oversized black t-shirt with artistic print. Bold statement piece for confident style.",
     image: "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Charcoal"]
   },
@@ -29,6 +40,12 @@ export const mockProducts = [
     mood: "Vintage",
     description: "Retro-inspired band graphic tee with distressed details. Nostalgic and cool.",
     image: "https://images.unsplash.com/photo-1554521666-7efcaf00980c?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1554521666-7efcaf00980c?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Navy", "Faded Black"]
   },
@@ -40,6 +57,11 @@ export const mockProducts = [
     mood: "Street",
     description: "Bold urban graphic with contemporary design. Perfect for street style enthusiasts.",
     image: "https://images.unsplash.com/photo-1506629082632-22dbbfc60a2f?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1506629082632-22dbbfc60a2f?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["White", "Black", "Gray"]
   },
@@ -51,6 +73,12 @@ export const mockProducts = [
     mood: "Soft",
     description: "Comfortable utility pants in soft neutral tones. Functional yet aesthetic.",
     image: "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Beige", "Cream", "Taupe"]
   },
@@ -62,6 +90,11 @@ export const mockProducts = [
     mood: "Dark",
     description: "Classic black cargo pants with multiple pockets. Essential dark academia piece.",
     image: "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Charcoal"]
   },
@@ -73,6 +106,12 @@ export const mockProducts = [
     mood: "Vintage",
     description: "High-waisted vintage-inspired denim with classic wash. Timeless and versatile.",
     image: "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Blue", "Light Blue", "Black"]
   },
@@ -84,6 +123,11 @@ export const mockProducts = [
     mood: "Street",
     description: "Oversized baggy pants for ultimate street aesthetic. Comfortable and trendy.",
     image: "https://images.unsplash.com/photo-1542831371-29ebb2cefe74?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1542831371-29ebb2cefe74?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Brown", "Navy"]
   },
@@ -95,6 +139,11 @@ export const mockProducts = [
     mood: "Soft",
     description: "Soft cream hoodie perfect for cozy layering. Minimalist design, maximum comfort.",
     image: "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Cream", "Beige", "Off-white"]
   },
@@ -106,6 +155,12 @@ export const mockProducts = [
     mood: "Dark",
     description: "Ultimate oversized black hoodie for bold styling. Statement piece for any wardrobe.",
     image: "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Charcoal", "Dark Gray"]
   },
@@ -117,6 +172,11 @@ export const mockProducts = [
     mood: "Vintage",
     description: "Retro logo hoodie with faded print. Authentic vintage vibes for nostalgia seekers.",
     image: "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1554521666-7efcaf00980c?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Faded Navy", "Faded Black"]
   },
@@ -128,6 +188,12 @@ export const mockProducts = [
     mood: "Street",
     description: "Bold zip hoodie with urban design. Perfect for street style and skateboard vibes.",
     image: "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1556821552-5f326dd0b5ca?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1506629082632-22dbbfc60a2f?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop"
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Gray", "White"]
   }

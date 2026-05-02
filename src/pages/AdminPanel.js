@@ -21,7 +21,10 @@ function AdminPanel() {
     mood: 'Soft',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [],
-    image: ''
+    frontImage: '',
+    backImage: '',
+    mockup1: '',
+    mockup2: ''
   });
 
   const handleChange = (e) => {
@@ -43,22 +46,30 @@ function AdminPanel() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.price || !formData.image) {
-      alert('Please fill all required fields');
+    if (!formData.name || !formData.price || !formData.frontImage || !formData.backImage) {
+      alert('Please fill all required fields (Name, Price, Front Image, Back Image)');
       return;
     }
 
+    const images = [formData.frontImage, formData.backImage];
+    if (formData.mockup1) images.push(formData.mockup1);
+    if (formData.mockup2) images.push(formData.mockup2);
+    const productData = {
+      ...formData,
+      price: parseInt(formData.price),
+      image: formData.frontImage,
+      images: images
+    };
+    delete productData.frontImage;
+    delete productData.backImage;
+    delete productData.mockup1;
+    delete productData.mockup2;
+
     if (editingId) {
-      updateProduct(editingId, {
-        ...formData,
-        price: parseInt(formData.price)
-      });
+      updateProduct(editingId, productData);
       setEditingId(null);
     } else {
-      addProduct({
-        ...formData,
-        price: parseInt(formData.price)
-      });
+      addProduct(productData);
     }
 
     setFormData({
@@ -69,7 +80,10 @@ function AdminPanel() {
       mood: 'Soft',
       sizes: ['S', 'M', 'L', 'XL'],
       colors: [],
-      image: ''
+      frontImage: '',
+      backImage: '',
+      mockup1: '',
+      mockup2: ''
     });
     setShowForm(false);
   };
@@ -83,7 +97,10 @@ function AdminPanel() {
       mood: product.mood,
       sizes: product.sizes,
       colors: product.colors || [],
-      image: product.image
+      frontImage: product.images && product.images[0] ? product.images[0] : product.image,
+      backImage: product.images && product.images[1] ? product.images[1] : '',
+      mockup1: product.images && product.images[2] ? product.images[2] : '',
+      mockup2: product.images && product.images[3] ? product.images[3] : ''
     });
     setEditingId(product.id);
     setShowForm(true);
@@ -160,7 +177,10 @@ function AdminPanel() {
                   mood: 'Soft',
                   sizes: ['S', 'M', 'L', 'XL'],
                   colors: [],
-                  image: ''
+                  frontImage: '',
+                  backImage: '',
+                  mockup1: '',
+                  mockup2: ''
                 });
               }
             }}
@@ -239,13 +259,45 @@ function AdminPanel() {
                 <label>Image URL *</label>
                 <input
                   type="text"
-                  name="image"
-                  value={formData.image}
+                  name="frontImage"
+                  value={formData.frontImage}
                   onChange={handleChange}
-                  placeholder="https://..."
+                  placeholder="Front image URL (required)"
                 />
               </div>
 
+              <div className="form-group">
+                <label>Back Image URL *</label>
+                <input
+                  type="text"
+                  name="backImage"
+                  value={formData.backImage}
+                  onChange={handleChange}
+                  placeholder="Back image URL (required)"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Mockup 1 (Optional)</label>
+                <input
+                  type="text"
+                  name="mockup1"
+                  value={formData.mockup1}
+                  onChange={handleChange}
+                  placeholder="Mockup 1 image URL"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Mockup 2 (Optional)</label>
+                <input
+                  type="text"
+                  name="mockup2"
+                  value={formData.mockup2}
+                  onChange={handleChange}
+                  placeholder="Mockup 2 image URL"
+                />
+              </div>
               <div className="form-group">
                 <label>Colors (comma-separated)</label>
                 <input

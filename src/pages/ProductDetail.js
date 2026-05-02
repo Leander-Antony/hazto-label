@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ProductContext, CartContext } from '../App';
 import ProductCard from '../components/ProductCard';
@@ -16,6 +16,10 @@ function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showNotification, setShowNotification] = useState(false);
+  const [isHoveringImage, setIsHoveringImage] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const imageRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,6 +27,7 @@ function ProductDetail() {
     if (foundProduct) {
       setProduct(foundProduct);
       setSelectedSize(foundProduct.sizes[0]);
+      setSelectedImageIndex(0);
     }
   }, [id, products]);
 
@@ -51,15 +56,59 @@ function ProductDetail() {
     window.open(whatsappUrl, '_blank');
   };
 
+  const handleImageMouseMove = (e) => {
+    if (!imageRef.current) return;
+    const rect = imageRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+  };
+
+  const handleImageMouseEnter = () => setIsHoveringImage(true);
+  const handleImageMouseLeave = () => setIsHoveringImage(false);
+
+  const handleThumbnailClick = (index) => {
+    setSelectedImageIndex(index);
+    setIsHoveringImage(false);
+    setMousePos({ x: 0, y: 0 });
+  };
+
   return (
     <main className="product-detail">
       <div className="product-detail-container">
         <div className="product-detail-grid">
           {/* Image */}
           <div className="product-images">
-            <div className="main-image">
-              <img src={product.image} alt={product.name} />
+            <div className="thumbnails-gallery">
+              {product.images && product.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  className={`thumbnail ${selectedImageIndex === idx ? 'active' : ''}`}
+                  onClick={() => handleThumbnailClick(idx)}
+                >
+                  <img src={img} alt={`${product.name} ${idx + 1}`} />
+                </button>
+              ))}
+            </div>
+            <div
+              className="main-image"
+              ref={imageRef}
+              onMouseMove={handleImageMouseMove}
+              onMouseEnter={handleImageMouseEnter}
+              onMouseLeave={handleImageMouseLeave}
+            >
+              <img src={product.images?.[selectedImageIndex] || product.image} alt={product.name} />
               <div className="mood-badge">{product.mood}</div>
+              {isHoveringImage && (
+                <div 
+                  className="image-zoom-preview" 
+                  style={{ 
+                    backgroundImage: `url('${product.images?.[selectedImageIndex] || product.image}')`,
+                    backgroundPositionX: `${mousePos.x}%`, 
+                    backgroundPositionY: `${mousePos.y}%` 
+                  }} 
+                />
+              )}
             </div>
           </div>
 

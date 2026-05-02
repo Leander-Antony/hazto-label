@@ -7,6 +7,7 @@ import PillNav from './PillNav';
 function Navbar({ cartCount }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -20,6 +21,10 @@ function Navbar({ cartCount }) {
     { label: 'Shop', href: '/products' }
   ];
 
+  const pillTextColor = isHomePage || isScrolled ? '#ffe7c1' : '#230629';
+  const hoveredPillTextColor = isHomePage || isScrolled ? '#ffe7c1' : '#230629';
+  const pillColor = isHomePage || isScrolled ? 'rgba(255,255,255,0.04)' : 'rgba(35,6,41,0.06)';
+
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
@@ -31,9 +36,9 @@ function Navbar({ cartCount }) {
           className="custom-nav"
           ease={'power2.easeOut'}
           baseColor={'transparent'}
-          pillColor={'rgba(255,255,255,0.04)'}
-          hoveredPillTextColor={'#ffffff'}
-          pillTextColor={'rgba(255,255,255,0.95)'}
+          pillColor={pillColor}
+          hoveredPillTextColor={hoveredPillTextColor}
+          pillTextColor={pillTextColor}
           initialLoadAnimation={false}
         />
 
