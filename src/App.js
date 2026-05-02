@@ -37,6 +37,7 @@ function App() {
   };
 
   // Initialize products from localStorage or mock data
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Load products from public/products.json (fallback to mockData)
     loadProductsFromFile();

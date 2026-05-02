@@ -9,7 +9,6 @@ const WHATSAPP_PHONE = '919876543210'; // Replace with your WhatsApp number
 
 function ProductDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { products } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);

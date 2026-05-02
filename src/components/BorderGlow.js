@@ -23,15 +23,7 @@ const GRADIENT_POSITIONS = ['80% 55%', '69% 34%', '8% 6%', '41% 38%', '86% 85%',
 const GRADIENT_KEYS = ['--gradient-one', '--gradient-two', '--gradient-three', '--gradient-four', '--gradient-five', '--gradient-six', '--gradient-seven'];
 const COLOR_MAP = [0, 1, 2, 0, 1, 2, 1];
 
-function buildGradientVars(colors) {
-  const vars = {};
-  for (let i = 0; i < 7; i++) {
-    const c = colors[Math.min(COLOR_MAP[i], colors.length - 1)];
-    vars[GRADIENT_KEYS[i]] = `radial-gradient(at ${GRADIENT_POSITIONS[i]}, ${c} 0px, transparent 50%)`;
-  }
-  vars['--gradient-base'] = `linear-gradient(${colors[0]} 0 100%)`;
-  return vars;
-}
+
 
 function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
 function easeInCubic(x) { return x * x * x; }
@@ -128,8 +120,6 @@ const BorderGlow = ({
       onEnd: () => card.classList.remove('sweep-active'),
     });
   }, [animated]);
-
-  const glowVars = buildGlowVars(glowColor, glowIntensity);
 
   return (
     <div

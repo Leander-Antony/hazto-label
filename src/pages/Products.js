@@ -7,7 +7,7 @@ import '../styles/products-page.css';
 
 function Products() {
   const { products } = useContext(ProductContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [selectedMood, setSelectedMood] = useState(searchParams.get('mood') || '');
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
 
