@@ -1,0 +1,12 @@
+.home-page {
+  background: white;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}

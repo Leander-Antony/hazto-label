@@ -1,0 +1,155 @@
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ProductContext, CartContext } from '../App';
+import ProductCard from '../components/ProductCard';
+import { MessageCircle, ShoppingCart } from 'lucide-react';
+import '../styles/product-detail.css';
+
+const WHATSAPP_PHONE = '919876543210'; // Replace with your WhatsApp number
+
+function ProductDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { products } = useContext(ProductContext);
+  const { addToCart } = useContext(CartContext);
+  const [product, setProduct] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const foundProduct = products.find(p => p.id === parseInt(id));
+    if (foundProduct) {
+      setProduct(foundProduct);
+      setSelectedSize(foundProduct.sizes[0]);
+    }
+  }, [id, products]);
+
+  if (!product) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  const relatedProducts = products.filter(
+    p => p.category === product.category && p.id !== product.id
+  ).slice(0, 4);
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+    addToCart(product, selectedSize, quantity);
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 3000);
+  };
+
+  const handleWhatsApp = () => {
+    const message = `Hi, I'm interested in:\n\nProduct: ${product.name}\nSize: ${selectedSize}\nQuantity: ${quantity}\nPrice: ₹${(product.price * quantity).toLocaleString('en-IN')}`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  return (
+    <main className="product-detail">
+      <div className="product-detail-container">
+        <div className="product-detail-grid">
+          {/* Image */}
+          <div className="product-images">
+            <div className="main-image">
+              <img src={product.image} alt={product.name} />
+              <div className="mood-badge">{product.mood}</div>
+            </div>
+          </div>
+
+          {/* Info */}
+          <div className="product-details">
+            <div className="details-header">
+              <h1>{product.name}</h1>
+              <p className="detail-category">{product.category}</p>
+            </div>
+
+            <div className="price-section">
+              <span className="price">₹{product.price.toLocaleString('en-IN')}</span>
+            </div>
+
+            <p className="description">{product.description}</p>
+
+            {/* Size Selector */}
+            <div className="size-section">
+              <label>Size</label>
+              <div className="size-options">
+                {product.sizes.map(size => (
+                  <button
+                    key={size}
+                    className={`size-btn ${selectedSize === size ? 'active' : ''}`}
+                    onClick={() => setSelectedSize(size)}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity Selector */}
+            <div className="quantity-section">
+              <label>Quantity</label>
+              <div className="quantity-selector">
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                <span>{quantity}</span>
+                <button onClick={() => setQuantity(quantity + 1)}>+</button>
+              </div>
+            </div>
+
+            {/* Colors Info */}
+            {product.colors && (
+              <div className="colors-section">
+                <label>Available Colors</label>
+                <div className="colors-list">
+                  {product.colors.map(color => (
+                    <span key={color} className="color-tag">{color}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="action-buttons">
+              <button className="btn btn-primary" onClick={handleAddToCart}>
+                <ShoppingCart size={20} />
+                Add to Cart
+              </button>
+              <button className="btn btn-whatsapp" onClick={handleWhatsApp}>
+                <MessageCircle size={20} />
+                Chat on WhatsApp
+              </button>
+            </div>
+
+            {showNotification && (
+              <div className="notification">
+                ✓ Added to cart!
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Related Products */}
+      {relatedProducts.length > 0 && (
+        <section className="related-products">
+          <div className="section-header">
+            <h2>You May Also Like</h2>
+          </div>
+          <div className="related-grid">
+            {relatedProducts.map(p => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
+  );
+}
+
+export default ProductDetail;

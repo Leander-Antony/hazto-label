@@ -1,0 +1,263 @@
+.cart-page {
+  min-height: 100vh;
+  background: var(--primary-light);
+  padding: 60px 20px;
+}
+
+.empty-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.empty-cart-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+.empty-cart-content h1 {
+  font-size: 2rem;
+}
+
+.empty-cart-content p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.cart-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cart-container > h1 {
+  margin-bottom: 40px;
+  font-size: 2.2rem;
+}
+
+.cart-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 40px;
+}
+
+/* Cart Items */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 100px 1fr 100px 120px 50px;
+  gap: 20px;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-details h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.item-size {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.item-price {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.item-quantity {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+}
+
+.item-quantity button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.item-quantity button:hover {
+  background: var(--border-light);
+}
+
+.item-quantity span {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+}
+
+.item-subtotal {
+  text-align: right;
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn:hover {
+  color: var(--accent-color);
+}
+
+/* Cart Summary */
+.cart-summary {
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.summary-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.summary-box h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.summary-box .btn {
+  justify-content: center;
+  padding: 14px 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cart-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 40px 20px;
+  }
+
+  .cart-item {
+    grid-template-columns: 80px 1fr;
+    gap: 15px;
+  }
+
+  .item-image {
+    width: 80px;
+    height: 80px;
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+
+  .item-details {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .item-quantity {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    width: fit-content;
+  }
+
+  .item-subtotal {
+    display: none;
+  }
+
+  .remove-btn {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .summary-box {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-container > h1 {
+    font-size: 1.5rem;
+  }
+
+  .item-details h3 {
+    font-size: 0.9rem;
+  }
+
+  .summary-box h2 {
+    font-size: 1.1rem;
+  }
+}
