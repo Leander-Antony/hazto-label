@@ -21,24 +21,23 @@ function App() {
     setProducts(mockProducts);
   };
 
-  const loadProductsFromFile = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/products`);
-      if (!res.ok) throw new Error('unable to fetch');
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        setProducts(data);
-        return;
-      }
-      seedProducts();
-    } catch (err) {
-      seedProducts();
-    }
-  };
-
   // Initialize products from localStorage or mock data
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    const loadProductsFromFile = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/products`);
+        if (!res.ok) throw new Error('unable to fetch');
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+          return;
+        }
+        seedProducts();
+      } catch (err) {
+        seedProducts();
+      }
+    };
+
     loadProductsFromFile();
 
     // Load cart from localStorage
