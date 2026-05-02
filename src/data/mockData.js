@@ -14,7 +14,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Beige", "Off-white", "Cream"]
+    colors: ["Beige", "Off-white", "Cream"],
+    featured: true
   },
   {
     id: 2,
@@ -30,7 +31,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "Charcoal"]
+    colors: ["Black", "Charcoal"],
+    featured: true
   },
   {
     id: 3,
@@ -47,7 +49,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Navy", "Faded Black"]
+    colors: ["Navy", "Faded Black"],
+    featured: false
   },
   {
     id: 4,
@@ -63,7 +66,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["White", "Black", "Gray"]
+    colors: ["White", "Black", "Gray"],
+    featured: true
   },
   {
     id: 5,
@@ -80,7 +84,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Beige", "Cream", "Taupe"]
+    colors: ["Beige", "Cream", "Taupe"],
+    featured: false
   },
   {
     id: 6,
@@ -96,7 +101,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "Charcoal"]
+    colors: ["Black", "Charcoal"],
+    featured: true
   },
   {
     id: 7,
@@ -113,7 +119,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1542120925-95fc36eb1e0d?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Blue", "Light Blue", "Black"]
+    colors: ["Blue", "Light Blue", "Black"],
+    featured: false
   },
   {
     id: 8,
@@ -129,7 +136,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "Brown", "Navy"]
+    colors: ["Black", "Brown", "Navy"],
+    featured: false
   },
   {
     id: 9,
@@ -145,7 +153,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Cream", "Beige", "Off-white"]
+    colors: ["Cream", "Beige", "Off-white"],
+    featured: true
   },
   {
     id: 10,
@@ -162,7 +171,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "Charcoal", "Dark Gray"]
+    colors: ["Black", "Charcoal", "Dark Gray"],
+    featured: false
   },
   {
     id: 11,
@@ -178,7 +188,8 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Faded Navy", "Faded Black"]
+    colors: ["Faded Navy", "Faded Black"],
+    featured: false
   },
   {
     id: 12,
@@ -195,9 +206,62 @@ export const mockProducts = [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop"
     ],
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "Gray", "White"]
+    colors: ["Black", "Gray", "White"],
+    featured: true
+  },
+  {
+    id: 13,
+    name: "Sandstone Overshirt",
+    price: 2799,
+    category: "Hoodie",
+    mood: "Soft",
+    description: "Lightweight overshirt with a clean relaxed fit. Easy layering for everyday styling.",
+    image: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Sand", "Stone", "Cream"],
+    featured: true
+  },
+  {
+    id: 14,
+    name: "Midnight Straight Pants",
+    price: 2999,
+    category: "Pants",
+    mood: "Dark",
+    description: "Straight-fit pants with a tailored look and clean drape. Built for sharp everyday fits.",
+    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542272604-787c62d465d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1542834369-29ab3e7e91d7?w=500&h=500&fit=crop"
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Black", "Ink", "Charcoal"],
+    featured: false
+  },
+  {
+    id: 15,
+    name: "Canvas Utility Jacket",
+    price: 3199,
+    category: "Hoodie",
+    mood: "Street",
+    description: "Utility-inspired jacket with roomy pockets and a structured silhouette.",
+    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500&h=500&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1552062407-291ce3f36b29?w=500&h=500&fit=crop"
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Olive", "Canvas", "Sand"],
+    featured: true
   }
 ];
 
 export const moods = ["Soft", "Dark", "Vintage", "Street"];
-export const categories = ["T-Shirt", "Pants"];
+export const categories = ["T-Shirt", "Pants", "Hoodie"];

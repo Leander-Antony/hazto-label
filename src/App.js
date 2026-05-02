@@ -15,19 +15,27 @@ function App() {
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const seedProducts = () => {
+    setProducts(mockProducts);
+    localStorage.setItem('hazto_products', JSON.stringify(mockProducts));
+  };
+
   // Initialize products from localStorage or mock data
   useEffect(() => {
     const storedProducts = localStorage.getItem('hazto_products');
     if (storedProducts) {
       try {
-        setProducts(JSON.parse(storedProducts));
+        const parsedProducts = JSON.parse(storedProducts);
+        if (Array.isArray(parsedProducts) && parsedProducts.length > 0) {
+          setProducts(parsedProducts);
+        } else {
+          seedProducts();
+        }
       } catch {
-        setProducts(mockProducts);
-        localStorage.setItem('hazto_products', JSON.stringify(mockProducts));
+        seedProducts();
       }
     } else {
-      setProducts(mockProducts);
-      localStorage.setItem('hazto_products', JSON.stringify(mockProducts));
+      seedProducts();
     }
 
     // Load cart from localStorage
@@ -96,8 +104,12 @@ function App() {
 
   const deleteProduct = (productId) => {
     const updatedProducts = products.filter(p => p.id !== productId);
-    setProducts(updatedProducts);
-    localStorage.setItem('hazto_products', JSON.stringify(updatedProducts));
+    if (updatedProducts.length > 0) {
+      setProducts(updatedProducts);
+      localStorage.setItem('hazto_products', JSON.stringify(updatedProducts));
+    } else {
+      seedProducts();
+    }
   };
 
   return (

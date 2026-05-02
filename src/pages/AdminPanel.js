@@ -21,6 +21,7 @@ function AdminPanel() {
     mood: 'Soft',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [],
+    featured: false,
     frontImage: '',
     backImage: '',
     mockup1: '',
@@ -28,10 +29,10 @@ function AdminPanel() {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -80,6 +81,7 @@ function AdminPanel() {
       mood: 'Soft',
       sizes: ['S', 'M', 'L', 'XL'],
       colors: [],
+      featured: false,
       frontImage: '',
       backImage: '',
       mockup1: '',
@@ -97,6 +99,7 @@ function AdminPanel() {
       mood: product.mood,
       sizes: product.sizes,
       colors: product.colors || [],
+      featured: Boolean(product.featured),
       frontImage: product.images && product.images[0] ? product.images[0] : product.image,
       backImage: product.images && product.images[1] ? product.images[1] : '',
       mockup1: product.images && product.images[2] ? product.images[2] : '',
@@ -122,6 +125,154 @@ function AdminPanel() {
       setCode('');
     }
   };
+
+  const renderProductForm = () => (
+    <form className="admin-form" onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label>Product Name *</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="e.g., Black Oversized T-Shirt"
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Price (₹) *</label>
+        <input
+          type="number"
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+          placeholder="1999"
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Description</label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Product description"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label>Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+          >
+            <option>T-Shirt</option>
+            <option>Pants</option>
+            <option>Hoodie</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Mood</label>
+          <select
+            name="mood"
+            value={formData.mood}
+            onChange={handleChange}
+          >
+            <option>Soft</option>
+            <option>Dark</option>
+            <option>Vintage</option>
+            <option>Street</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label>Image URL *</label>
+        <input
+          type="text"
+          name="frontImage"
+          value={formData.frontImage}
+          onChange={handleChange}
+          placeholder="Front image URL (required)"
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Back Image URL *</label>
+        <input
+          type="text"
+          name="backImage"
+          value={formData.backImage}
+          onChange={handleChange}
+          placeholder="Back image URL (required)"
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Mockup 1 (Optional)</label>
+        <input
+          type="text"
+          name="mockup1"
+          value={formData.mockup1}
+          onChange={handleChange}
+          placeholder="Mockup 1 image URL"
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Mockup 2 (Optional)</label>
+        <input
+          type="text"
+          name="mockup2"
+          value={formData.mockup2}
+          onChange={handleChange}
+          placeholder="Mockup 2 image URL"
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Colors (comma-separated)</label>
+        <input
+          type="text"
+          value={formData.colors.join(', ')}
+          onChange={handleColorChange}
+          placeholder="e.g., Black, Navy, White"
+        />
+      </div>
+
+      <div className="form-group form-checkbox-group">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            name="featured"
+            checked={formData.featured}
+            onChange={handleChange}
+          />
+          Featured product
+        </label>
+      </div>
+
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary">
+          {editingId ? 'Update Product' : 'Add Product'}
+        </button>
+        <button 
+          type="button" 
+          className="btn btn-outline"
+          onClick={() => {
+            setShowForm(false);
+            setEditingId(null);
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
 
   if (!isAuthenticated) {
     return (
@@ -177,6 +328,7 @@ function AdminPanel() {
                   mood: 'Soft',
                   sizes: ['S', 'M', 'L', 'XL'],
                   colors: [],
+                  featured: false,
                   frontImage: '',
                   backImage: '',
                   mockup1: '',
@@ -190,140 +342,9 @@ function AdminPanel() {
           </button>
         </div>
 
-        {showForm && (
+        {showForm && !editingId && (
           <div className="admin-form-section">
-            <form className="admin-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Product Name *</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="e.g., Black Oversized T-Shirt"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Price (₹) *</label>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  placeholder="1999"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Description</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  placeholder="Product description"
-                  rows="4"
-                ></textarea>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Category</label>
-                  <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                  >
-                    <option>T-Shirt</option>
-                    <option>Pants</option>
-                    <option>Hoodie</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Mood</label>
-                  <select
-                    name="mood"
-                    value={formData.mood}
-                    onChange={handleChange}
-                  >
-                    <option>Soft</option>
-                    <option>Dark</option>
-                    <option>Vintage</option>
-                    <option>Street</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Image URL *</label>
-                <input
-                  type="text"
-                  name="frontImage"
-                  value={formData.frontImage}
-                  onChange={handleChange}
-                  placeholder="Front image URL (required)"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Back Image URL *</label>
-                <input
-                  type="text"
-                  name="backImage"
-                  value={formData.backImage}
-                  onChange={handleChange}
-                  placeholder="Back image URL (required)"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Mockup 1 (Optional)</label>
-                <input
-                  type="text"
-                  name="mockup1"
-                  value={formData.mockup1}
-                  onChange={handleChange}
-                  placeholder="Mockup 1 image URL"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Mockup 2 (Optional)</label>
-                <input
-                  type="text"
-                  name="mockup2"
-                  value={formData.mockup2}
-                  onChange={handleChange}
-                  placeholder="Mockup 2 image URL"
-                />
-              </div>
-              <div className="form-group">
-                <label>Colors (comma-separated)</label>
-                <input
-                  type="text"
-                  value={formData.colors.join(', ')}
-                  onChange={handleColorChange}
-                  placeholder="e.g., Black, Navy, White"
-                />
-              </div>
-
-              <div className="form-actions">
-                <button type="submit" className="btn btn-primary">
-                  {editingId ? 'Update Product' : 'Add Product'}
-                </button>
-                <button 
-                  type="button" 
-                  className="btn btn-outline"
-                  onClick={() => {
-                    setShowForm(false);
-                    setEditingId(null);
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+            {renderProductForm()}
           </div>
         )}
 
@@ -342,13 +363,15 @@ function AdminPanel() {
                     <th>Name</th>
                     <th>Category</th>
                     <th>Mood</th>
+                    <th>Featured</th>
                     <th>Price</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map(product => (
-                    <tr key={product.id}>
+                    <React.Fragment key={product.id}>
+                    <tr>
                       <td>
                         <img 
                           src={product.image} 
@@ -359,6 +382,7 @@ function AdminPanel() {
                       <td className="product-name">{product.name}</td>
                       <td>{product.category}</td>
                       <td>{product.mood}</td>
+                      <td>{product.featured ? 'Yes' : 'No'}</td>
                       <td>₹{product.price.toLocaleString('en-IN')}</td>
                       <td className="action-buttons">
                         <button
@@ -377,6 +401,18 @@ function AdminPanel() {
                         </button>
                       </td>
                     </tr>
+                    {editingId === product.id && showForm && (
+                      <tr className="inline-edit-row">
+                        <td colSpan="7">
+                          <div className="inline-edit-panel">
+                            <div className="inline-edit-header">
+                            </div>
+                            {renderProductForm()}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>

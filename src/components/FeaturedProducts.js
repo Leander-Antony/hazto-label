@@ -5,7 +5,7 @@ import '../styles/featured-products.css';
 
 function FeaturedProducts() {
   const { products } = useContext(ProductContext);
-  const featuredProducts = products.slice(0, 6);
+  const featuredProducts = products.filter(product => product.featured);
 
   return (
     <section className="featured-products">
