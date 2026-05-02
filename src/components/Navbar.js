@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Instagram } from 'lucide-react';
 import '../styles/navbar.css';
 import PillNav from './PillNav';
 
@@ -43,6 +43,9 @@ function Navbar({ cartCount }) {
         />
 
         <div className="nav-actions">
+          <a href="https://www.instagram.com/hazto_label/" target="_blank" rel="noreferrer" className="nav-link instagram-link" title="Follow on Instagram">
+            <Instagram size={20} />
+          </a>
           <Link to="/cart" className="nav-link cart-link">
             <ShoppingCart size={20} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}

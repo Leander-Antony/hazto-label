@@ -25,16 +25,15 @@ function ProductCard({ product }) {
               alt={product.name}
               className="product-image"
             />
-            {isHovered && (
-              <div className="product-overlay">
-                <button
-                  className="quick-add"
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product, (product.sizes && product.sizes[0]) || null, 1); }}
-                >
-                  <ShoppingCart size={14} />
-                </button>
-              </div>
-            )}
+            <div className="overlay-actions" aria-hidden={!isHovered}>
+              <button
+                className="quick-add"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product, (product.sizes && product.sizes[0]) || null, 1); }}
+                title="Quick add to cart"
+              >
+                <ShoppingCart size={14} />
+              </button>
+            </div>
           </div>
           
           <div className="product-info">

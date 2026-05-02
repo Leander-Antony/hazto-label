@@ -11,7 +11,7 @@ function FeaturedProducts() {
     <section className="featured-products">
       <div className="section-header">
         <h2>Featured Collection</h2>
-        <p>Handpicked favorites</p>
+        <p>Handpicked picks</p>
       </div>
 
       <div className="featured-grid">

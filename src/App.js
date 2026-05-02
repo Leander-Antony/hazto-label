@@ -11,32 +11,35 @@ import { mockProducts } from './data/mockData';
 export const CartContext = createContext();
 export const ProductContext = createContext();
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
 function App() {
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
 
   const seedProducts = () => {
     setProducts(mockProducts);
-    localStorage.setItem('hazto_products', JSON.stringify(mockProducts));
+  };
+
+  const loadProductsFromFile = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/products`);
+      if (!res.ok) throw new Error('unable to fetch');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        setProducts(data);
+        return;
+      }
+      seedProducts();
+    } catch (err) {
+      seedProducts();
+    }
   };
 
   // Initialize products from localStorage or mock data
   useEffect(() => {
-    const storedProducts = localStorage.getItem('hazto_products');
-    if (storedProducts) {
-      try {
-        const parsedProducts = JSON.parse(storedProducts);
-        if (Array.isArray(parsedProducts) && parsedProducts.length > 0) {
-          setProducts(parsedProducts);
-        } else {
-          seedProducts();
-        }
-      } catch {
-        seedProducts();
-      }
-    } else {
-      seedProducts();
-    }
+    // Load products from public/products.json (fallback to mockData)
+    loadProductsFromFile();
 
     // Load cart from localStorage
     const storedCart = localStorage.getItem('hazto_cart');
@@ -89,27 +92,45 @@ function App() {
   };
 
   const addProduct = (newProduct) => {
-    const updatedProducts = [...products, { ...newProduct, id: Date.now() }];
-    setProducts(updatedProducts);
-    localStorage.setItem('hazto_products', JSON.stringify(updatedProducts));
+    // persist via API
+    fetch(`${API_BASE_URL}/api/products`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newProduct)
+    })
+    .then(r => r.json())
+    .then(created => setProducts(prev => [...prev, created]))
+    .catch(() => setProducts(prev => [...prev, { ...newProduct, id: Date.now() }]));
   };
 
   const updateProduct = (productId, updatedData) => {
-    const updatedProducts = products.map(p => 
-      p.id === productId ? { ...p, ...updatedData } : p
-    );
-    setProducts(updatedProducts);
-    localStorage.setItem('hazto_products', JSON.stringify(updatedProducts));
+    fetch(`${API_BASE_URL}/api/products/${productId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedData)
+    })
+    .then(r => {
+      if (!r.ok) throw new Error('update failed');
+      return r.json();
+    })
+    .then(updated => setProducts(prev => prev.map(p => p.id === productId ? updated : p)))
+    .catch(() => setProducts(prev => prev.map(p => p.id === productId ? { ...p, ...updatedData } : p)));
   };
 
   const deleteProduct = (productId) => {
-    const updatedProducts = products.filter(p => p.id !== productId);
-    if (updatedProducts.length > 0) {
-      setProducts(updatedProducts);
-      localStorage.setItem('hazto_products', JSON.stringify(updatedProducts));
-    } else {
-      seedProducts();
-    }
+    fetch(`${API_BASE_URL}/api/products/${productId}`, { method: 'DELETE' })
+      .then(r => {
+        if (!r.ok) throw new Error('delete failed');
+        setProducts(prev => prev.filter(p => p.id !== productId));
+      })
+      .catch(() => {
+        const updatedProducts = products.filter(p => p.id !== productId);
+        if (updatedProducts.length > 0) {
+          setProducts(updatedProducts);
+        } else {
+          seedProducts();
+        }
+      });
   };
 
   return (

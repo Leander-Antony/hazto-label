@@ -383,6 +383,26 @@
 }
 
 @media (max-width: 480px) {
+  .product-detail {
+    padding: 32px 16px;
+  }
+
+  .main-image {
+    border-radius: 10px;
+  }
+
+  .product-details {
+    padding: 20px;
+  }
+
+  .details-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .price {
+    font-size: 1.3rem;
+  }
+
   .size-options {
     gap: 8px;
   }
@@ -394,7 +414,7 @@
   }
 
   .related-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }

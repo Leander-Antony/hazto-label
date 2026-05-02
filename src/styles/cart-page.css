@@ -249,15 +249,28 @@
 }
 
 @media (max-width: 480px) {
+  .cart-page {
+    padding: 32px 16px;
+  }
+
   .cart-container > h1 {
-    font-size: 1.5rem;
+    font-size: 1.45rem;
+    margin-bottom: 24px;
+  }
+
+  .cart-item {
+    padding: 14px;
   }
 
   .item-details h3 {
     font-size: 0.9rem;
   }
 
+  .summary-box {
+    padding: 20px;
+  }
+
   .summary-box h2 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 }
