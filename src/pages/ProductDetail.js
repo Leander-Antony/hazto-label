@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ProductContext, CartContext } from '../App';
 import ProductCard from '../components/ProductCard';
 import { MessageCircle, ShoppingCart } from 'lucide-react';
