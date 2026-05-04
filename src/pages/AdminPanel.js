@@ -17,8 +17,8 @@ function AdminPanel() {
     name: '',
     price: '',
     description: '',
-    category: 'T-Shirt',
-    mood: 'Soft',
+    category: 'Jerseys',
+    mood: '',
     sizes: [],
     colors: [],
     featured: false,
@@ -89,8 +89,8 @@ function AdminPanel() {
       name: '',
       price: '',
       description: '',
-      category: 'T-Shirt',
-      mood: 'Soft',
+      category: 'Jerseys',
+      mood: '',
       sizes: [],
       colors: [],
       featured: false,
@@ -147,7 +147,7 @@ function AdminPanel() {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="e.g., Black Oversized T-Shirt"
+          placeholder="e.g., Black Oversized jersey"
         />
       </div>
 
@@ -181,9 +181,9 @@ function AdminPanel() {
             value={formData.category}
             onChange={handleChange}
           >
-            <option>T-Shirt</option>
-            <option>Pants</option>
-            <option>Hoodie</option>
+            <option>Jerseys</option>
+            <option>Over sized</option>
+            <option>pants</option>
           </select>
         </div>
 
@@ -194,7 +194,7 @@ function AdminPanel() {
             value={formData.mood}
             onChange={handleChange}
           >
-            <option>Soft</option>
+            <option value="">-- Select Mood --</option>
             <option>Dark</option>
             <option>Vintage</option>
             <option>Street</option>
@@ -347,13 +347,13 @@ function AdminPanel() {
             onClick={() => {
               setShowForm(!showForm);
               setEditingId(null);
-              if (!showForm) {
+                  if (!showForm) {
                 setFormData({
                   name: '',
                   price: '',
                   description: '',
-                  category: 'T-Shirt',
-                  mood: 'Soft',
+                  category: 'Jerseys',
+                  mood: '',
                   sizes: [],
                   colors: [],
                   featured: false,

@@ -4,11 +4,6 @@ import '../styles/shop-by-mood.css';
 
 const moodData = [
   {
-    mood: 'Jerseys',
-    image: 'https://i.ibb.co/WNgNK7G8/jersey.jpg',
-    description: 'Sporty & bold'
-  },
-  {
     mood: 'Dark',
     image: 'https://i.ibb.co/JW7sdDwy/dark.jpg',
     description: 'Bold & mysterious'
