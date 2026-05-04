@@ -47,12 +47,17 @@ function App() {
         const res = await fetch(`${API_BASE_URL}/api/products`);
         if (!res.ok) throw new Error('unable to fetch');
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
+          // Use whatever the API returned (including empty array).
+          // Previously we seeded mock data when the array was empty,
+          // which caused deleted collections to reappear client-side.
           setProducts(data);
           return;
         }
+        // If API didn't return an array, fall back to local seed
         seedProducts();
       } catch (err) {
+        // On network or server error, fall back to mock data
         seedProducts();
       }
     };

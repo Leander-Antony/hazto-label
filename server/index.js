@@ -145,10 +145,12 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
+    console.log('[API] POST /api/products - body:', JSON.stringify(req.body).slice(0,200));
     await ensureInitialized();
     const db = ensureFirestoreClient();
     const newProduct = { ...req.body, id: Date.now() };
     await db.collection('products').doc(String(newProduct.id)).set(newProduct);
+    console.log(`[API] Created product id=${newProduct.id}`);
     res.status(201).json(newProduct);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create product' });
@@ -158,12 +160,14 @@ app.post('/api/products', async (req, res) => {
 app.put('/api/products/:id', async (req, res) => {
   try {
     const id = Number(req.params.id);
+    console.log(`[API] PUT /api/products/${id} - body:`, JSON.stringify(req.body).slice(0,200));
     const existingProduct = await readProductById(id);
     if (!existingProduct) return res.status(404).json({ error: 'Not found' });
     const updatedProduct = { ...existingProduct, ...req.body, id };
     await ensureInitialized();
     const db = ensureFirestoreClient();
     await db.collection('products').doc(String(id)).set(updatedProduct);
+    console.log(`[API] Updated product id=${id}`);
     res.json(updatedProduct);
   } catch (error) {
     res.status(500).json({ error: 'Failed to update product' });
@@ -173,11 +177,16 @@ app.put('/api/products/:id', async (req, res) => {
 app.delete('/api/products/:id', async (req, res) => {
   try {
     const id = Number(req.params.id);
+    console.log(`[API] DELETE /api/products/${id}`);
     const existing = await readProductById(id);
-    if (!existing) return res.status(404).json({ error: 'Not found' });
+    if (!existing) {
+      console.log(`[API] DELETE id=${id} not found`);
+      return res.status(404).json({ error: 'Not found' });
+    }
     await ensureInitialized();
     const db = ensureFirestoreClient();
     await db.collection('products').doc(String(id)).delete();
+    console.log(`[API] Deleted product id=${id}`);
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete product' });
