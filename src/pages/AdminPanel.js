@@ -383,7 +383,7 @@ function AdminPanel() {
                       <td>{product.category}</td>
                       <td>{product.mood}</td>
                       <td>{product.featured ? 'Yes' : 'No'}</td>
-                      <td>₹{product.price.toLocaleString('en-IN')}</td>
+                      <td>₹{product.price ? product.price.toLocaleString('en-IN') : 'N/A'}</td>
                       <td className="action-buttons">
                         <button
                           className="action-btn edit"

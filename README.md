@@ -45,11 +45,11 @@ A modern, responsive React-based e-commerce website for HAZTO LABEL with the tag
 - **Add Products**: Create new items with all details
 - **Edit Products**: Modify existing products
 - **Delete Products**: Remove items from catalog
-- **Persistent Storage**: Changes saved to localStorage
+- **Persistent Storage**: Changes saved to Firestore via the API
 
 ### State Management
 - **React Context API**: For cart and product management
-- **localStorage**: Persistent data across sessions
+- **Firestore**: Persistent product storage across sessions
 - **Mock Data**: Pre-populated product database
 
 ### WhatsApp Integration
@@ -149,7 +149,7 @@ const WHATSAPP_PHONE = '919876543210'; // Your WhatsApp number
 3. Fill in product details
 4. Click "Add Product"
 
-Products are automatically saved to localStorage and appear instantly across the site.
+Products are automatically saved to Firestore and appear instantly across the site.
 
 ### Customize Colors
 Edit `src/styles/global.css` CSS variables:
@@ -180,11 +180,11 @@ View in `src/data/mockData.js`
 - [ ] Add/edit/delete products in admin panel
 - [ ] Test responsive design on mobile
 
-### LocalStorage
-- **Products**: `hazto_products`
-- **Cart**: `hazto_cart`
+### Firestore
+- **Collection**: `products`
+- **Seed data**: Loaded automatically from `public/products.json` on first run
 
-Clear from browser DevTools → Application → LocalStorage
+Use the Firebase console to inspect or clear product records.
 
 ## 🌐 Deployment
 
@@ -213,11 +213,11 @@ Add to `package.json`:
 - **React Router** 6.11.0
 - **Lucide Icons** for beautiful SVG icons
 - **Pure CSS** for styling (no frameworks)
-- **LocalStorage** for persistence
+- **Firestore** for product persistence
 
 ## 📝 Notes
 
-- **No Backend**: All data stored locally (localStorage)
+- **Backend API**: Product data stored in Firestore through the Express server
 - **Mock Images**: Uses Unsplash for product images
 - **Responsive**: Tested on mobile, tablet, and desktop
 - **Accessibility**: Semantic HTML and keyboard navigation support

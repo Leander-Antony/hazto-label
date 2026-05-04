@@ -2,6 +2,9 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const admin = require('firebase-admin');
+
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,13 +13,21 @@ app.use(cors());
 app.use(express.json());
 
 const PRODUCTS_FILE = path.resolve(__dirname, '..', 'public', 'products.json');
-const TURSO_DATABASE_URL = process.env.TURSO_DATABASE_URL;
-const TURSO_AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN;
+const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+const FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL;
+const FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY;
 
-let turso = null;
+// Log environment setup (but never log private keys)
+console.log('[SERVER] Environment Variables Loaded:');
+console.log('  - PORT:', PORT);
+console.log('  - FIREBASE_PROJECT_ID:', FIREBASE_PROJECT_ID || 'NOT SET');
+console.log('  - FIREBASE_CLIENT_EMAIL:', FIREBASE_CLIENT_EMAIL || 'NOT SET');
+console.log('  - FIREBASE_PRIVATE_KEY:', FIREBASE_PRIVATE_KEY ? 'SET (length: ' + FIREBASE_PRIVATE_KEY.length + ')' : 'NOT SET');
+
+let firestore = null;
 let initPromise = null;
 
-function readProducts() {
+function readSeedProducts() {
   try {
     const raw = fs.readFileSync(PRODUCTS_FILE, 'utf8');
     return JSON.parse(raw);
@@ -25,118 +36,102 @@ function readProducts() {
   }
 }
 
-function writeProducts(data) {
-  fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2), 'utf8');
-}
-
-function useTursoStorage() {
-  return Boolean(TURSO_DATABASE_URL && TURSO_AUTH_TOKEN);
-}
-
-async function ensureTursoClient() {
-  if (turso || !useTursoStorage()) {
-    return turso;
+function ensureFirestoreClient() {
+  if (firestore) {
+    return firestore;
   }
 
-  const { createClient } = await import('@tursodatabase/serverless/compat');
-  turso = createClient({
-    url: TURSO_DATABASE_URL,
-    authToken: TURSO_AUTH_TOKEN
-  });
-
-  return turso;
-}
-
-async function initializeTurso() {
-  const client = await ensureTursoClient();
-  if (!client) {
-    return;
-  }
-
-  await client.execute(`
-    CREATE TABLE IF NOT EXISTS products (
-      id INTEGER PRIMARY KEY,
-      data TEXT NOT NULL
-    )
-  `);
-
-  const countResult = await client.execute('SELECT COUNT(*) AS count FROM products');
-  const existingCount = Number(countResult.rows?.[0]?.count || 0);
-
-  if (existingCount === 0) {
-    const seedProducts = readProducts();
-    if (seedProducts.length > 0) {
-      await client.batch(
-        seedProducts.map(product => ({
-          sql: 'INSERT INTO products (id, data) VALUES (?, ?)',
-          args: [product.id, JSON.stringify(product)]
-        })),
-        'write'
-      );
+  try {
+    if (!admin.apps.length) {
+      if (FIREBASE_CLIENT_EMAIL && FIREBASE_PRIVATE_KEY) {
+        console.log('[Firestore] Initializing with service account credentials...');
+        admin.initializeApp({
+          credential: admin.credential.cert({
+            projectId: FIREBASE_PROJECT_ID,
+            clientEmail: FIREBASE_CLIENT_EMAIL,
+            privateKey: FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+          })
+        });
+        console.log('[Firestore] ✓ Initialized with service account.');
+      } else {
+        console.log('[Firestore] WARNING: Using default credentials (FIREBASE_CLIENT_EMAIL or FIREBASE_PRIVATE_KEY not set)');
+        admin.initializeApp();
+      }
     }
+
+    firestore = admin.firestore();
+    firestore.settings({ ignoreUndefinedProperties: true });
+    console.log('[Firestore] ✓ Firestore client created.');
+    return firestore;
+  } catch (err) {
+    console.error('[Firestore] ERROR initializing:', err.message);
+    throw err;
   }
 }
 
 function ensureInitialized() {
   if (!initPromise) {
-    initPromise = initializeTurso();
+    initPromise = initializeFirestore();
   }
   return initPromise;
 }
 
-async function readProductsStore() {
-  if (!useTursoStorage()) {
-    return { products: readProducts() };
+async function initializeFirestore() {
+  try {
+    const db = ensureFirestoreClient();
+    console.log('[Firestore] Checking if products collection exists...');
+    const snapshot = await db.collection('products').limit(1).get();
+
+    if (!snapshot.empty) {
+      console.log('[Firestore] Products collection already has data.');
+      return;
+    }
+    console.log('[Firestore] Products collection is empty, seeding from products.json...');
+
+  const seedProducts = readSeedProducts();
+  if (seedProducts.length === 0) {
+    return;
   }
 
+    const batch = db.batch();
+    for (const product of seedProducts) {
+      const docRef = db.collection('products').doc(String(product.id));
+      batch.set(docRef, product);
+    }
+
+    await batch.commit();
+    console.log(`[Firestore] Successfully seeded ${seedProducts.length} products to Firestore.`);
+  } catch (err) {
+    console.error('[Firestore] Error during initialization:', err.message);
+    throw err;
+  }
+}
+
+async function readProductsStore() {
   await ensureInitialized();
-  const client = await ensureTursoClient();
-  const result = await client.execute('SELECT data FROM products ORDER BY id ASC');
-  return {
-    products: result.rows.map(row => JSON.parse(row.data))
-  };
+  const db = ensureFirestoreClient();
+  try {
+    const result = await db.collection('products').orderBy('id', 'asc').get();
+    console.log(`[Firestore] Read ${result.docs.length} products from Firestore.`);
+    return {
+      products: result.docs.map(doc => doc.data())
+    };
+  } catch (err) {
+    console.error('[Firestore] Error reading products:', err.message);
+    throw err;
+  }
 }
 
 async function readProductById(id) {
-  if (!useTursoStorage()) {
-    return readProducts().find(product => product.id === id) || null;
-  }
-
   await ensureInitialized();
-  const client = await ensureTursoClient();
-  const result = await client.execute({
-    sql: 'SELECT data FROM products WHERE id = ?',
-    args: [id]
-  });
+  const db = ensureFirestoreClient();
+  const doc = await db.collection('products').doc(String(id)).get();
 
-  if (!result.rows.length) {
+  if (!doc.exists) {
     return null;
   }
 
-  return JSON.parse(result.rows[0].data);
-}
-
-async function writeProductsStore(products) {
-  if (!useTursoStorage()) {
-    writeProducts(products);
-    return { success: true };
-  }
-
-  await ensureInitialized();
-  const client = await ensureTursoClient();
-  await client.execute('DELETE FROM products');
-
-  if (products.length > 0) {
-    await client.batch(
-      products.map(product => ({
-        sql: 'INSERT INTO products (id, data) VALUES (?, ?)',
-        args: [product.id, JSON.stringify(product)]
-      })),
-      'write'
-    );
-  }
-
-  return { success: true };
+  return doc.data();
 }
 
 app.get('/api/products', async (req, res) => {
@@ -150,10 +145,10 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    const { products } = await readProductsStore();
+    await ensureInitialized();
+    const db = ensureFirestoreClient();
     const newProduct = { ...req.body, id: Date.now() };
-    products.push(newProduct);
-    await writeProductsStore(products);
+    await db.collection('products').doc(String(newProduct.id)).set(newProduct);
     res.status(201).json(newProduct);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create product' });
@@ -163,12 +158,12 @@ app.post('/api/products', async (req, res) => {
 app.put('/api/products/:id', async (req, res) => {
   try {
     const id = Number(req.params.id);
-    const { products } = await readProductsStore();
-    const idx = products.findIndex(p => p.id === id);
-    if (idx === -1) return res.status(404).json({ error: 'Not found' });
-    const updatedProduct = { ...products[idx], ...req.body, id };
-    products[idx] = updatedProduct;
-    await writeProductsStore(products);
+    const existingProduct = await readProductById(id);
+    if (!existingProduct) return res.status(404).json({ error: 'Not found' });
+    const updatedProduct = { ...existingProduct, ...req.body, id };
+    await ensureInitialized();
+    const db = ensureFirestoreClient();
+    await db.collection('products').doc(String(id)).set(updatedProduct);
     res.json(updatedProduct);
   } catch (error) {
     res.status(500).json({ error: 'Failed to update product' });
@@ -178,11 +173,11 @@ app.put('/api/products/:id', async (req, res) => {
 app.delete('/api/products/:id', async (req, res) => {
   try {
     const id = Number(req.params.id);
-    let { products } = await readProductsStore();
-    const existing = products.find(p => p.id === id);
+    const existing = await readProductById(id);
     if (!existing) return res.status(404).json({ error: 'Not found' });
-    products = products.filter(p => p.id !== id);
-    await writeProductsStore(products);
+    await ensureInitialized();
+    const db = ensureFirestoreClient();
+    await db.collection('products').doc(String(id)).delete();
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete product' });
@@ -192,12 +187,15 @@ app.delete('/api/products/:id', async (req, res) => {
 if (require.main === module) {
   const start = async () => {
     try {
+      console.log('[SERVER] Starting server...');
       await ensureInitialized();
+      console.log('[SERVER] ✓ Firestore initialized.');
       app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}`);
+        console.log(`[SERVER] ✓ Server running on http://localhost:${PORT}`);
       });
     } catch (error) {
-      console.error('Failed to start server:', error);
+      console.error('[SERVER] ERROR - Failed to start server:', error.message);
+      console.error(error);
       process.exit(1);
     }
   };

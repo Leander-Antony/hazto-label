@@ -21,9 +21,28 @@ function App() {
     setProducts(mockProducts);
   };
 
-  // Initialize products from localStorage or mock data
+  // Load cart from localStorage on mount
   useEffect(() => {
-    const loadProductsFromFile = async () => {
+    try {
+      const savedCart = localStorage.getItem('hazto_cart');
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      }
+    } catch (err) {
+      console.error('Error loading cart from localStorage:', err);
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('hazto_cart', JSON.stringify(cart));
+    } catch (err) {
+      console.error('Error saving cart to localStorage:', err);
+    }
+  }, [cart]);
+  useEffect(() => {
+    const loadProducts = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/api/products`);
         if (!res.ok) throw new Error('unable to fetch');
@@ -38,23 +57,8 @@ function App() {
       }
     };
 
-    loadProductsFromFile();
-
-    // Load cart from localStorage
-    const storedCart = localStorage.getItem('hazto_cart');
-    if (storedCart) {
-      try {
-        setCart(JSON.parse(storedCart));
-      } catch {
-        setCart([]);
-      }
-    }
+    loadProducts();
   }, []);
-
-  // Save cart to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('hazto_cart', JSON.stringify(cart));
-  }, [cart]);
 
   const addToCart = (product, size, quantity = 1) => {
     const existingItem = cart.find(item => item.id === product.id && item.size === size);
