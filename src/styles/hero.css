@@ -10,6 +10,7 @@
   /* slow gentle background zoom */
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   animation: bgZoom 30s linear infinite alternate;
 }
 
@@ -35,8 +36,8 @@
 }
 
 @keyframes bgZoom {
-  from { background-size: 102% auto; }
-  to { background-size: 108% auto; }
+  from { background-size: 102% 102%; }
+  to { background-size: 108% 108%; }
 }
 
 /* Floating soft elements for depth (used via pseudo elements or additional markup) */
