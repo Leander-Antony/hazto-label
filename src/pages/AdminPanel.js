@@ -19,7 +19,7 @@ function AdminPanel() {
     description: '',
     category: 'T-Shirt',
     mood: 'Soft',
-    sizes: ['S', 'M', 'L', 'XL'],
+    sizes: [],
     colors: [],
     featured: false,
     frontImage: '',
@@ -27,6 +27,18 @@ function AdminPanel() {
     mockup1: '',
     mockup2: ''
   });
+
+  const AVAILABLE_SIZES = ['S', 'M', 'L', 'XL'];
+
+  const handleSizeToggle = (size) => {
+    setFormData(prev => {
+      const sizes = prev.sizes || [];
+      if (sizes.includes(size)) {
+        return { ...prev, sizes: sizes.filter(s => s !== size) };
+      }
+      return { ...prev, sizes: [...sizes, size] };
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -79,7 +91,7 @@ function AdminPanel() {
       description: '',
       category: 'T-Shirt',
       mood: 'Soft',
-      sizes: ['S', 'M', 'L', 'XL'],
+      sizes: [],
       colors: [],
       featured: false,
       frontImage: '',
@@ -199,6 +211,22 @@ function AdminPanel() {
           onChange={handleChange}
           placeholder="Front image URL (required)"
         />
+      </div>
+
+      <div className="form-group">
+        <label>Available Sizes</label>
+        <div className="sizes-checkboxes">
+          {AVAILABLE_SIZES.map(sz => (
+            <label key={sz} className="checkbox-label size-label">
+              <input
+                type="checkbox"
+                checked={formData.sizes && formData.sizes.includes(sz)}
+                onChange={() => handleSizeToggle(sz)}
+              />
+              {sz}
+            </label>
+          ))}
+        </div>
       </div>
 
       <div className="form-group">
@@ -326,7 +354,7 @@ function AdminPanel() {
                   description: '',
                   category: 'T-Shirt',
                   mood: 'Soft',
-                  sizes: ['S', 'M', 'L', 'XL'],
+                  sizes: [],
                   colors: [],
                   featured: false,
                   frontImage: '',

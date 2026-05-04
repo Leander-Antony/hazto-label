@@ -4,23 +4,23 @@ import '../styles/shop-by-mood.css';
 
 const moodData = [
   {
-    mood: 'Soft',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
-    description: 'Minimalist & dreamy'
+    mood: 'Jerseys',
+    image: 'https://i.ibb.co/WNgNK7G8/jersey.jpg',
+    description: 'Sporty & bold'
   },
   {
     mood: 'Dark',
-    image: 'https://images.unsplash.com/photo-1503342217505-b57375b546d1?w=400&h=400&fit=crop',
+    image: 'https://i.ibb.co/JW7sdDwy/dark.jpg',
     description: 'Bold & mysterious'
   },
   {
     mood: 'Vintage',
-    image: 'https://images.unsplash.com/photo-1554521666-7efcaf00980c?w=400&h=400&fit=crop',
+    image: 'https://i.ibb.co/qY2p5d65/vintage.jpg',
     description: 'Retro & nostalgic'
   },
   {
     mood: 'Street',
-    image: 'https://images.unsplash.com/photo-1506755855726-617b92a0b568?w=400&h=400&fit=crop',
+    image: 'https://i.ibb.co/zTWKc05x/street.jpg',
     description: 'Urban & edgy'
   }
 ];
