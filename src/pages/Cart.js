@@ -4,7 +4,7 @@ import { CartContext } from '../App';
 import { Trash2, MessageCircle } from 'lucide-react';
 import '../styles/cart-page.css';
 
-const WHATSAPP_PHONE = '919876543210'; // Replace with your WhatsApp number
+const WHATSAPP_PHONE = '918056607351'; // +91 80566 07351
 
 function Cart() {
   const { cart, removeFromCart, updateCartQuantity } = useContext(CartContext);

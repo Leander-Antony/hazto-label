@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import { MessageCircle, ShoppingCart } from 'lucide-react';
 import '../styles/product-detail.css';
 
-const WHATSAPP_PHONE = '919876543210'; // Replace with your WhatsApp number
+const WHATSAPP_PHONE = '918056607351'; // +91 80566 07351
 
 function ProductDetail() {
   const { id } = useParams();
