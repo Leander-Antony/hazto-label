@@ -8,7 +8,7 @@ function Navbar({ cartCount }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const navActionColor = isHomePage && !isScrolled ? '#ffe7c1' : '#230629';
+  const navActionColor = '#ffe7c1';
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
