@@ -71,6 +71,10 @@
   padding: 4px 2px;
 }
 
+.nav-actions .nav-link {
+  color: inherit;
+}
+
 .nav-link:hover,
 .nav-link.active {
   color: var(--accent-color);

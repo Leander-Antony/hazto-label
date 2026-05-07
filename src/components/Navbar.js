@@ -8,6 +8,7 @@ function Navbar({ cartCount }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const navActionColor = isHomePage && !isScrolled ? '#ffe7c1' : '#230629';
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -43,10 +44,10 @@ function Navbar({ cartCount }) {
         />
 
         <div className="nav-actions">
-          <a href="https://www.instagram.com/hazto_label/" target="_blank" rel="noreferrer" className="nav-link instagram-link" title="Follow on Instagram">
+          <a href="https://www.instagram.com/hazto_label/" target="_blank" rel="noreferrer" className="nav-link instagram-link" title="Follow on Instagram" style={{ color: navActionColor }}>
             <Instagram size={20} />
           </a>
-          <Link to="/cart" className="nav-link cart-link">
+          <Link to="/cart" className="nav-link cart-link" style={{ color: navActionColor }}>
             <ShoppingCart size={20} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </Link>
