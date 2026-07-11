@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { ProductContext, CartContext } from '../App';
 import ProductCard from '../components/ProductCard';
 import { MessageCircle, ShoppingBag } from 'lucide-react';
@@ -144,7 +144,7 @@ function ProductDetail() {
       {relatedProducts.length > 0 && (
         <section className="related-products">
           <div className="section-header">
-            <h2>// SIMILAR ASSETS</h2>
+            <h2>{`// SIMILAR ASSETS`}</h2>
           </div>
           <div className="related-grid">
             {relatedProducts.map(p => (
