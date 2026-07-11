@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ProductContext, CartContext } from '../App';
 import ProductCard from '../components/ProductCard';
-import { MessageCircle, ShoppingCart } from 'lucide-react';
+import { MessageCircle, ShoppingBag } from 'lucide-react';
 import '../styles/product-detail.css';
 
 const WHATSAPP_PHONE = '918056607351'; // +91 80566 07351
@@ -15,10 +15,7 @@ function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showNotification, setShowNotification] = useState(false);
-  const [isHoveringImage, setIsHoveringImage] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const imageRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +28,7 @@ function ProductDetail() {
   }, [id, products]);
 
   if (!product) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading">LOADING MODULE...</div>;
   }
 
   const relatedProducts = products.filter(
@@ -55,78 +52,51 @@ function ProductDetail() {
     window.open(whatsappUrl, '_blank');
   };
 
-  const handleImageMouseMove = (e) => {
-    if (!imageRef.current) return;
-    const rect = imageRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
-  };
-
-  const handleImageMouseEnter = () => setIsHoveringImage(true);
-  const handleImageMouseLeave = () => setIsHoveringImage(false);
-
-  const handleThumbnailClick = (index) => {
-    setSelectedImageIndex(index);
-    setIsHoveringImage(false);
-    setMousePos({ x: 0, y: 0 });
-  };
-
   return (
     <main className="product-detail">
+      
       <div className="product-detail-container">
-        <div className="product-detail-grid">
-          {/* Image */}
-          <div className="product-images">
-            <div className="thumbnails-gallery">
-              {product.images && product.images.map((img, idx) => (
-                <button
-                  key={idx}
-                  className={`thumbnail ${selectedImageIndex === idx ? 'active' : ''}`}
-                  onClick={() => handleThumbnailClick(idx)}
-                >
-                  <img src={img} alt={`${product.name} ${idx + 1}`} />
-                </button>
-              ))}
-            </div>
-            <div
-              className="main-image"
-              ref={imageRef}
-              onMouseMove={handleImageMouseMove}
-              onMouseEnter={handleImageMouseEnter}
-              onMouseLeave={handleImageMouseLeave}
-            >
+
+        <div className="classic-split-grid">
+          
+          {/* LEFT: IMAGES */}
+          <div className="classic-image-col">
+            <div className="main-image">
               <img src={product.images?.[selectedImageIndex] || product.image} alt={product.name} />
               <div className="mood-badge">{product.mood}</div>
-              {isHoveringImage && (
-                <div 
-                  className="image-zoom-preview" 
-                  style={{ 
-                    backgroundImage: `url('${product.images?.[selectedImageIndex] || product.image}')`,
-                    backgroundPositionX: `${mousePos.x}%`, 
-                    backgroundPositionY: `${mousePos.y}%` 
-                  }} 
-                />
-              )}
             </div>
+            {product.images && product.images.length > 1 && (
+              <div className="classic-thumbnails">
+                {product.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    className={`thumbnail ${selectedImageIndex === idx ? 'active' : ''}`}
+                    onClick={() => setSelectedImageIndex(idx)}
+                  >
+                    <img src={img} alt={`${product.name} ${idx + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Info */}
-          <div className="product-details">
+          {/* RIGHT: DETAILS */}
+          <div className="classic-details-col">
             <div className="details-header">
               <h1>{product.name}</h1>
-              <p className="detail-category">{product.category}</p>
+              <p className="detail-category">CAT: {product.category}</p>
             </div>
 
             <div className="price-section">
               <span className="price">₹{product.price.toLocaleString('en-IN')}</span>
             </div>
 
-            <p className="description">{product.description}</p>
+            <div className="desc-section">
+              <p className="description">{product.description}</p>
+            </div>
 
-            {/* Size Selector */}
             <div className="size-section">
-              <label>Size</label>
+              <label>SELECT SIZE</label>
               <div className="size-options">
                 {product.sizes.map(size => (
                   <button
@@ -140,9 +110,8 @@ function ProductDetail() {
               </div>
             </div>
 
-            {/* Quantity Selector */}
             <div className="quantity-section">
-              <label>Quantity</label>
+              <label>QUANTITY</label>
               <div className="quantity-selector">
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
                 <span>{quantity}</span>
@@ -150,36 +119,24 @@ function ProductDetail() {
               </div>
             </div>
 
-            {/* Colors Info */}
-            {product.colors && (
-              <div className="colors-section">
-                <label>Available Colors</label>
-                <div className="colors-list">
-                  {product.colors.map(color => (
-                    <span key={color} className="color-tag">{color}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
             <div className="action-buttons">
-              <button className="btn btn-primary" onClick={handleAddToCart}>
-                <ShoppingCart size={20} />
-                Add to Cart
+              <button className="btn btn-primary full-width" onClick={handleAddToCart}>
+                <ShoppingBag size={20} strokeWidth={2.5} />
+                [ ACQUIRE ITEM ]
               </button>
-              <button className="btn btn-whatsapp" onClick={handleWhatsApp}>
-                <MessageCircle size={20} />
-                Chat on WhatsApp
+              <button className="btn btn-outline full-width" onClick={handleWhatsApp}>
+                <MessageCircle size={20} strokeWidth={2.5} />
+                [ INQUIRE NOW ]
               </button>
             </div>
 
             {showNotification && (
-              <div className="notification">
-                ✓ Added to cart!
+              <div className="notification-banner">
+                STATUS: ITEM ADDED TO CART
               </div>
             )}
           </div>
+          
         </div>
       </div>
 
@@ -187,7 +144,7 @@ function ProductDetail() {
       {relatedProducts.length > 0 && (
         <section className="related-products">
           <div className="section-header">
-            <h2>You May Also Like</h2>
+            <h2>// SIMILAR ASSETS</h2>
           </div>
           <div className="related-grid">
             {relatedProducts.map(p => (

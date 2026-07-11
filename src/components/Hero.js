@@ -12,27 +12,37 @@ function Hero() {
   };
 
   return (
-    <section
-      className="hero"
-      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/hero.png)` }}
-    >
-      <div className="hero-overlay"></div>
-      <div className="floating-soft" style={{ width: 260, height: 260, left: '8%', top: '18%', background: 'radial-gradient(circle, rgba(202,108,230,0.12), transparent 40%)' }} />
-      <div className="floating-soft" style={{ width: 320, height: 320, right: '6%', bottom: '8%', background: 'radial-gradient(circle, rgba(35,6,41,0.08), transparent 40%)', animationDelay: '2s' }} />
+    <section className="hero">
+      <div className="marquee-container top-marquee">
+        <div className="marquee">
+          <span>STREETWEAR CAPSULE / THRIFT CURATED / Y2K VINTAGE / ARCHIVE FASHION /&nbsp;</span>
+          <span>STREETWEAR CAPSULE / THRIFT CURATED / Y2K VINTAGE / ARCHIVE FASHION /&nbsp;</span>
+        </div>
+      </div>
       
       <div className="hero-content">
-        <div className="hero-text">
-          <h1 className="hero-title">HAZTO LABEL</h1>
-          <p className="hero-tagline">From Cart to Confidence</p>
-          <Link to="/products" className="hero-btn">
-            Explore Collection
+        <div className="hero-text-block">
+          <h1 className="hero-title">HAZTO<br/>LABEL.</h1>
+          <div className="hero-box">
+            <p className="hero-tagline">FROM CART TO CONFIDENCE</p>
+            <p className="hero-sub">PREMIUM CURATED ARCHIVE & STREETWEAR.</p>
+          </div>
+          <Link to="/products" className="btn btn-primary hero-btn">
+            [ SHOP LATEST DROP ]
           </Link>
         </div>
       </div>
 
-      <button className="scroll-indicator" onClick={scrollToSection}>
-        <ChevronDown size={28} />
+      <button className="scroll-indicator" onClick={scrollToSection} aria-label="Scroll down">
+        <ChevronDown size={40} strokeWidth={3} />
       </button>
+
+      <div className="marquee-container bottom-marquee">
+        <div className="marquee marquee-reverse">
+          <span>LIMITED STOCK / WORLDWIDE SHIPPING / QUALITY GUARANTEED /&nbsp;</span>
+          <span>LIMITED STOCK / WORLDWIDE SHIPPING / QUALITY GUARANTEED /&nbsp;</span>
+        </div>
+      </div>
     </section>
   );
 }

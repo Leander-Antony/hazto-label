@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import '../styles/product-card.css';
-import BorderGlow from './BorderGlow';
 import { CartContext } from '../App';
 
 function ProductCard({ product }) {
@@ -12,7 +11,7 @@ function ProductCard({ product }) {
   const backImage = product.images?.[1] || product.image;
 
   return (
-    <BorderGlow className="product-card-wrapper" glowColor="#ca6ce6" backgroundColor={'#ffffff'}>
+    <div className="product-card-wrapper">
       <Link to={`/products/${product.id}`} className="product-card-link">
         <div 
           className="product-card"
@@ -31,7 +30,7 @@ function ProductCard({ product }) {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product, (product.sizes && product.sizes[0]) || null, 1); }}
                 title="Quick add to cart"
               >
-                <ShoppingCart size={14} />
+                <ShoppingBag size={20} strokeWidth={2.5} />
               </button>
             </div>
           </div>
@@ -43,7 +42,7 @@ function ProductCard({ product }) {
           </div>
         </div>
       </Link>
-    </BorderGlow>
+    </div>
   );
 }
 

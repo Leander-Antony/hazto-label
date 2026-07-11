@@ -31,11 +31,12 @@
 
 /* Filters Sidebar */
 .filters-sidebar {
-  background: white;
+  background: var(--surface);
   padding: 30px;
-  border-radius: 12px;
+  border: var(--border-thick);
+  border-radius: 0;
   height: fit-content;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
   position: sticky;
   top: 100px;
 }
@@ -46,7 +47,7 @@
   align-items: center;
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: var(--border-thick);
 }
 
 .filters-header h3 {

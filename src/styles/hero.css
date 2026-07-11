@@ -6,154 +6,160 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--primary-dark);
-  /* slow gentle background zoom */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: bgZoom 30s linear infinite alternate;
+  background-color: var(--primary-light);
+  border-bottom: var(--border-thick);
 }
 
-.hero-overlay {
+.marquee-container {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(35, 6, 41, 0.6), rgba(202, 108, 230, 0.3));
+  overflow: hidden;
+  background: var(--accent-color);
+  border-top: var(--border-thick);
+  border-bottom: var(--border-thick);
+  padding: 12px 0;
   z-index: 2;
+  white-space: nowrap;
 }
 
-/* Vignette */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.25) 100%);
-  mix-blend-mode: multiply;
-  z-index: 4;
+.top-marquee {
+  top: 10%;
+  transform: rotate(-2deg) scale(1.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-@keyframes bgZoom {
-  from { background-size: 102% 102%; }
-  to { background-size: 108% 108%; }
+.bottom-marquee {
+  bottom: 15%;
+  background: var(--primary-dark);
+  color: var(--primary-light);
+  transform: rotate(3deg) scale(1.1);
 }
 
-/* Floating soft elements for depth (used via pseudo elements or additional markup) */
-.floating-soft {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(30px);
-  opacity: 0.12;
-  animation: floatY 8s ease-in-out infinite;
-  pointer-events: none;
+.marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
 }
 
-@keyframes floatY {
-  from { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
-  to { transform: translateY(0); }
+.marquee-reverse {
+  animation: marquee-reverse 25s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
 .hero-content {
   position: relative;
-  z-index: 3;
-  text-align: center;
-  color: white;
-  animation: fadeIn 1s ease-out;
+  z-index: 5;
+  text-align: left;
+  animation: fadeIn 1s cubic-bezier(0.19, 1, 0.22, 1);
+  padding: 40px;
+  background: var(--surface);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-lg);
+  max-width: 900px;
+  width: 90%;
+  transform: rotate(-1deg);
 }
 
-.hero-text {
+.hero-text-block {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .hero-title {
-  font-size: 5rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  animation: slideIn 0.8s ease-out;
+  font-size: 8rem;
+  color: var(--primary-dark);
+  margin: 0;
+  line-height: 0.85;
+  text-shadow: 6px 6px 0px var(--accent-color);
+}
+
+.hero-box {
+  border: var(--border-thick);
+  padding: 16px;
+  background: var(--primary-light);
 }
 
 .hero-tagline {
-  font-size: 1.8rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  animation: slideIn 0.8s ease-out 0.2s both;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--primary-dark);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .hero-btn {
-  padding: 16px 40px;
-  border: 2px solid white;
-  background: white;
-  color: var(--primary-dark);
-  font-weight: 700;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: fit-content;
-  margin: 0 auto;
-  animation: fadeIn 1s ease-out 0.4s both;
-  display: inline-block;
-}
-
-.hero-btn:hover {
-  background: transparent;
-  color: white;
-  transform: translateY(-2px);
+  align-self: flex-start;
+  margin-top: 16px;
+  font-size: 1.2rem;
 }
 
 .scroll-indicator {
   position: absolute;
-  bottom: 40px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 3;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
+  z-index: 10;
+  background: var(--primary-dark);
+  border: var(--border-thick);
+  color: var(--accent-color);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   cursor: pointer;
-  animation: bounce 2s infinite;
+  animation: bounceBrutalist 2s infinite;
+  box-shadow: var(--shadow-sm);
 }
 
-@keyframes bounce {
-  0%, 100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(-10px);
-  }
+.scroll-indicator:hover {
+  background: var(--accent-color);
+  color: var(--primary-dark);
+}
+
+@keyframes bounceBrutalist {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); box-shadow: 4px 14px 0px #111111; }
 }
 
 @media (max-width: 768px) {
-  .hero {
-    min-height: 100svh;
-    height: 100svh;
-    padding: 0 16px;
+  .hero-content {
+    padding: 24px;
+    transform: rotate(0);
   }
 
   .hero-title {
-    font-size: clamp(2.2rem, 12vw, 3rem);
-    letter-spacing: 1px;
-    line-height: 1.05;
+    font-size: clamp(4rem, 15vw, 6rem);
+    text-shadow: 4px 4px 0px var(--accent-color);
   }
 
-  .hero-tagline {
-    font-size: clamp(1rem, 4.5vw, 1.2rem);
-    letter-spacing: 1px;
-    line-height: 1.4;
-  }
-
-  .hero-btn {
-    padding: 12px 22px;
-    font-size: 0.95rem;
-  }
-
+  .top-marquee { top: 15%; }
+  .bottom-marquee { bottom: 20%; }
+  
   .scroll-indicator {
+    width: 50px;
+    height: 50px;
     bottom: 16px;
   }
 }
