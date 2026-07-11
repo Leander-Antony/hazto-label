@@ -15,7 +15,7 @@ A modern, responsive React-based e-commerce website for HAZTO LABEL with the tag
 
 #### 🏠 Home Page
 - **Hero Section**: Fullscreen cinematic video with overlay text
-- **Shop by Mood**: Browse by aesthetic categories (Soft, Dark, Vintage, Street)
+ - **Shop by Mood**: Browse by aesthetic categories (Dark, Vintage, Street)
 - **Featured Products**: Asymmetrical grid with hover effects
 - **Editorial Section**: Fashion storytelling with blog-style content
 - **Community Section**: Instagram-style user photo grid
@@ -164,8 +164,8 @@ Edit `src/styles/global.css` CSS variables:
 ## 📊 Sample Data
 
 The app includes 12 pre-loaded products across:
-- **Categories**: T-Shirt, Pants, Hoodie
-- **Moods**: Soft, Dark, Vintage, Street
+- **Categories**: jerseys, Over sized, pants
+- **Moods**: Dark, Vintage, Street
 
 View in `src/data/mockData.js`
 
