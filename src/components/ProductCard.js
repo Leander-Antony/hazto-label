@@ -19,11 +19,17 @@ function ProductCard({ product }) {
           onMouseLeave={() => setIsHovered(false)}
         >
           <div className="product-image-container">
-            <img 
-              src={isHovered ? backImage : frontImage} 
-              alt={product.name}
-              className="product-image"
-            />
+            {frontImage ? (
+              <img 
+                src={isHovered && backImage ? backImage : frontImage} 
+                alt={product.name}
+                className="product-image"
+              />
+            ) : (
+              <div className="product-image-placeholder">
+                <span className="placeholder-text">HAZTO LABEL</span>
+              </div>
+            )}
             <div className="overlay-actions" aria-hidden={!isHovered}>
               <button
                 className="quick-add"

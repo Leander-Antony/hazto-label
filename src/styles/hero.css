@@ -15,7 +15,6 @@
   width: 100%;
   overflow: hidden;
   background: var(--accent-color);
-  border-top: var(--border-thick);
   border-bottom: var(--border-thick);
   padding: 12px 0;
   z-index: 2;

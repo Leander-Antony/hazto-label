@@ -5,8 +5,7 @@
 
 @media (max-width: 768px) {
   .pill-nav-container {
-    width: 100%;
-    left: 0;
+    width: auto;
   }
 }
 
@@ -24,9 +23,11 @@
 
 @media (max-width: 768px) {
   .pill-nav {
-    width: 100%;
-    justify-content: space-between;
+    width: auto;
+    justify-content: flex-end;
     background: transparent;
+    border: none;
+    padding: 0;
   }
 }
 
@@ -117,8 +118,8 @@
 }
 
 .mobile-menu-button {
-  width: var(--nav-h);
-  height: var(--nav-h);
+  width: 44px;
+  height: 44px;
   background: var(--accent-color);
   border: var(--border-thick);
   display: none;
@@ -136,9 +137,33 @@
 
 .hamburger-line { width: 24px; height: 3px; background: var(--text-on-accent); transition: all 0.2s ease; }
 
-.mobile-menu-popover { position:absolute; top:4.5rem; left:0; right:0; background: var(--primary-light); border: var(--border-thick); box-shadow: 6px 6px 0px #111; z-index:998; opacity:0; transform-origin: top center; visibility:hidden; border-radius: 0; }
+.mobile-menu-popover {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 50px);
+  background: var(--surface);
+  border-top: var(--border-thick);
+  z-index: 998;
+  opacity: 0;
+  transform-origin: top center;
+  visibility: hidden;
+  border-radius: 0;
+  overflow-y: auto;
+}
 .mobile-menu-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
 .mobile-menu-list > li { border-bottom: var(--border-thick); }
 .mobile-menu-list > li:last-child { border-bottom: none; }
-.mobile-menu-link { display:block; padding:20px; color:var(--primary-dark); background: var(--primary-light); text-decoration:none; font-family: 'Space Grotesk', sans-serif; font-size:1.2rem; font-weight:700; text-transform: uppercase; transition: background 200ms ease; }
+.mobile-menu-link {
+  display: block;
+  padding: 30px 24px;
+  color: var(--text-primary);
+  background: transparent;
+  text-decoration: none;
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  text-transform: uppercase;
+  transition: background 200ms ease, color 200ms ease;
+}
 .mobile-menu-link:hover, .mobile-menu-link.is-active { background: var(--primary-dark); color: var(--primary-light); }
