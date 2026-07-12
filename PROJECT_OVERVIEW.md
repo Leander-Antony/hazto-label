@@ -74,13 +74,13 @@ hazto-label/
   - Active link highlighting
 
 - **Hero.js** (40 lines)
-  - Video background with overlay
-  - Animated text and CTA
-  - Smooth scroll indicator
+  - Brutalist scrolling text marquee
+  - Stark solid background
+  - Sharp bordered containers
 
 - **ProductCard.js** (35 lines)
-  - Hover preview
-  - Image zoom animation
+  - Strict 4:5 image ratio
+  - Harsh hover drop shadow
   - Quick view link
 
 - **ShopByMood.js** (50 lines)
@@ -112,8 +112,8 @@ hazto-label/
   - Filter sidebar
 
 - **ProductDetail.js** (150 lines)
-  - Product gallery
-  - Size/quantity selectors
+  - App-like fixed screen layout
+  - Scrollable details pane
   - WhatsApp integration
   - Related products
 
@@ -160,12 +160,9 @@ hazto-label/
 ## 🚀 Performance Optimizations
 
 ✅ **Included**:
-- Lazy image loading with native HTML
-- CSS minification in production
 - Code splitting with React Router
-- Optimized animations (GPU-accelerated)
+- CSS minification in production
 - Responsive images (object-fit)
-- Smooth scroll behavior
 
 ## 📱 Responsive Breakpoints
 
@@ -178,25 +175,23 @@ hazto-label/
 
 ## 🎨 Design System
 
-### Colors
-- Primary Dark: `#0a0a0a`
-- Primary Light: `#f5f5f5`
-- Accent Beige: `#d4c5b9`
-- Secondary Gray: `#2a2a2a`
+### Colors (Dynamic Dark/Light Themes)
+- Primary Dark: `#111111`
+- Primary Light: `#fae4cc` / `#f4f4f0`
+- Accent Color: `#d1b3ff` / `#ff00ff`
+- Text on Accent: `#111111`
 
 ### Typography
-- Headlines: Playfair Display (serif)
-- Body: Inter (sans-serif)
+- Headlines: Anton (sans-serif)
+- Body: Space Grotesk (sans-serif)
 
-### Spacing
-- Base unit: 10px
-- Section padding: 80px (desktop), 60px (tablet), 40px (mobile)
-- Grid gaps: 30px (desktop), 20px (tablet), 15px (mobile)
+### Spacing & Borders
+- Thick stark borders: `3px solid var(--primary-dark)`
+- Sharp square corners (no border-radius)
 
 ### Shadows
-- Light: `0 4px 15px rgba(0, 0, 0, 0.08)`
-- Medium: `0 10px 30px rgba(0, 0, 0, 0.1)`
-- Large: `0 20px 50px rgba(0, 0, 0, 0.15)`
+- Brutalist offset shadow: `4px 4px 0px var(--primary-dark)`
+- Heavy offset shadow: `8px 8px 0px var(--primary-dark)`
 
 ## 🔗 Component Relationships
 
@@ -254,12 +249,9 @@ react@18.2.0
 
 ## 🎬 Animation Types
 
-- **fadeIn**: Opacity transition with slide up
-- **slideIn**: Slide in from left with fade
-- **zoomIn**: Scale from 0.9 with fade
-- **bounce**: Vertical bounce loop
-- **hover**: Smooth scale on hover
-- **parallax**: Background parallax effect
+- **marquee**: Infinite horizontal scrolling for hero text
+- **themeToggle**: Smooth color transition between dark and light modes
+- **hover offset**: Instant shadow displacement on hover
 
 ## 📋 Routing Map
 

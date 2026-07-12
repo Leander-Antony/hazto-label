@@ -61,8 +61,8 @@ The frontend uses:
 ## 🎯 What You Get
 
 ### ✅ Fully Functional Features
-- ✔️ **Homepage** with hero section, mood categories, featured products
-- ✔️ **Product Listing** with advanced filters
+- ✔️ **Homepage** with marquee hero, mood categories, rigid product grid
+- ✔️ **Product Listing** with brutalist sidebar filters
 - ✔️ **Product Detail Page** with size/quantity selection
 - ✔️ **Shopping Cart** with real-time calculations
 - ✔️ **Admin Panel** (access at `/admin`) to manage products
@@ -72,11 +72,11 @@ The frontend uses:
 - ✔️ **Persistent Storage** (Firestore)
 
 ### 🎨 Design Elements
-- Dark + Neutral aesthetic
-- Premium typography (Playfair Display + Inter)
-- Rounded corners and soft shadows
-- Smooth scroll and fade animations
-- Mobile-first responsive layout
+- Y2K Streetwear Brutalist aesthetic
+- Dynamic Dark/Light mode support
+- Premium typography (Anton + Space Grotesk)
+- Sharp edges and harsh offset drop shadows
+- App-like fixed-screen product detail layout
 
 ---
 
@@ -125,14 +125,21 @@ const WHATSAPP_PHONE = '919876543210'; // Change this
 Format: Include country code (e.g., +91 for India, +1 for USA)
 
 ### 🎨 Customize Colors
-Edit `src/styles/global.css` (lines 6-15):
+Edit `src/styles/global.css` (lines 14-22 and 25-33 for dark mode):
 ```css
 :root {
-  --primary-dark: #0a0a0a;      /* Main dark color */
-  --primary-light: #f5f5f5;      /* Background color */
-  --accent-beige: #d4c5b9;       /* Accent color */
-  --accent-gray: #2a2a2a;        /* Secondary dark */
+  --primary-dark: #111111;      /* Main text, borders */
+  --primary-light: #fae4cc;     /* Pale peach background */
+  --accent-color: #d1b3ff;      /* Lilac accent */
+  --text-on-accent: #111111;
   /* ... update as needed */
+}
+
+[data-theme="dark"] {
+  --primary-dark: #f4f4f0;      /* Newspaper white text */
+  --primary-light: #111111;     /* Pitch black background */
+  --accent-color: #ff00ff;      /* Hot pink accent */
+  --text-on-accent: #111111;
 }
 ```
 

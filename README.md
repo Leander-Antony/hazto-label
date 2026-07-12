@@ -5,32 +5,33 @@ A modern, responsive React-based e-commerce website for HAZTO LABEL with the tag
 ## 🌑 Features
 
 ### Global Design
-- **Dark + Neutral Aesthetic**: Black, beige, and off-white tones
-- **Smooth Animations**: Fade, parallax, hover zoom effects
-- **Modern Typography**: Playfair Display + Inter fonts
-- **Rounded Cards & Soft Shadows**: Premium feel
-- **Fully Responsive**: Mobile-first design
+- **Streetwear Brutalist Aesthetic**: Stark black and white with vibrant pale peach/lilac accents.
+- **Dynamic Marquees**: Infinitely scrolling text for a hyped streetwear feel.
+- **Modern Typography**: Massive Anton headings + Space Grotesk body text.
+- **Sharp Edges & Harsh Shadows**: Authentic Y2K/Depop visual style.
+- **App-Like Details**: Fixed-screen, no-scroll product detail pages.
 
 ### Pages & Features
 
 #### 🏠 Home Page
-- **Hero Section**: Fullscreen cinematic video with overlay text
- - **Shop by Mood**: Browse by aesthetic categories (Dark, Vintage, Street)
-- **Featured Products**: Asymmetrical grid with hover effects
-- **Editorial Section**: Fashion storytelling with blog-style content
-- **Community Section**: Instagram-style user photo grid
+- **Hero Section**: Brutalist marquee scrolling text with solid borders.
+- **Shop by Mood**: Browse by aesthetic categories (Dark, Vintage, Street)
+- **Featured Products**: Rigid grid with fixed-ratio product cards.
+- **Editorial Section**: Fashion storytelling with brutalist layout.
+- **Community Section**: Instagram-style user photo grid.
 
 #### 🛍 Product Listing
-- **Advanced Filters**: By mood and category
-- **Asymmetrical Grid**: Responsive product cards
-- **Quick View**: Hover to see product details
-- **Add to Cart**: Direct from listing
+- **Advanced Filters**: Sticky brutalist sidebar filter.
+- **Rigid Grid**: Responsive product cards with fixed 4:5 image ratios.
+- **Hover Effects**: Acid green/lilac accents on hover.
+- **Add to Cart**: Direct from listing.
 
 #### 📄 Product Detail Page
-- **Large Product Gallery**: Full-size images
-- **Size & Quantity Selectors**: Easy customization
-- **WhatsApp Integration**: Pre-filled order messages
-- **"You May Also Like"**: Related product suggestions
+- **App-Like Fixed Layout**: Fits perfectly on screen without page scrolling.
+- **Scrollable Details Pane**: Industrial data-grid styling for product info.
+- **Size & Quantity Selectors**: Brutalist form controls.
+- **WhatsApp Integration**: Pre-filled order messages.
+- **"You May Also Like"**: Related product suggestions in details pane.
 
 #### 🛒 Shopping Cart
 - **Order Summary**: Item list with images and prices
@@ -155,8 +156,9 @@ Products are automatically saved to Firestore and appear instantly across the si
 Edit `src/styles/global.css` CSS variables:
 ```css
 :root {
-  --primary-dark: #0a0a0a;
-  --accent-beige: #d4c5b9;
+  --primary-dark: #111111;
+  --primary-light: #fae4cc;
+  --accent-color: #d1b3ff;
   /* ... other colors */
 }
 ```

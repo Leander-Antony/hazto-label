@@ -11,38 +11,43 @@ This guide explains how to customize HAZTO LABEL to match your brand.
 ### Edit Global Colors
 **File**: `src/styles/global.css`
 
+The site uses a dynamic light/dark mode system driven by CSS variables.
+
 ```css
 :root {
-  --primary-dark: #0a0a0a;           /* Main text, buttons */
-  --primary-light: #f5f5f5;           /* Background, light sections */
-  --accent-beige: #d4c5b9;            /* Highlights, hover states */
-  --accent-gray: #2a2a2a;             /* Secondary dark tones */
-  --border-light: #e0e0e0;            /* Borders, dividers */
-  --text-primary: #1a1a1a;            /* Body text */
-  --text-secondary: #666666;          /* Meta text, descriptions */
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+  --primary-dark: #111111;           /* Main text, borders */
+  --primary-light: #fae4cc;          /* Background color */
+  --accent-color: #d1b3ff;           /* Highlight color */
+  --text-on-accent: #111111;         /* Text color when on accent bg */
+  --surface: #ffffff;
+  --surface-border: #111111;
+  --text-primary: #111111;
+  --shadow: 8px 8px 0px var(--primary-dark);
+}
+
+[data-theme="dark"] {
+  --primary-dark: #f4f4f0;           /* White text/borders */
+  --primary-light: #111111;          /* Pitch black background */
+  --accent-color: #ff00ff;           /* Hot pink highlight */
+  --text-on-accent: #111111;         
+  --surface: #1a1a1a;
+  --surface-border: #f4f4f0;
+  --text-primary: #f4f4f0;
 }
 ```
 
 ### Color Theme Examples
 
-**Modern Dark**:
+**Cyberpunk**:
 ```css
---primary-dark: #1a1a1a;
---accent-beige: #e8d4c0;
+:root { --accent-color: #00ffcc; }
+[data-theme="dark"] { --accent-color: #ff00ff; }
 ```
 
-**Classic Monochrome**:
+**Monochrome Brutalism**:
 ```css
---primary-dark: #000000;
---accent-beige: #808080;
-```
-
-**Warm Tones**:
-```css
---primary-dark: #2c1810;
---accent-beige: #d4a574;
+:root { --accent-color: #cccccc; }
+[data-theme="dark"] { --accent-color: #333333; --text-on-accent: #ffffff; }
 ```
 
 ---
@@ -50,8 +55,8 @@ This guide explains how to customize HAZTO LABEL to match your brand.
 ## 🔤 Typography
 
 ### Fonts Used
-- **Display**: Playfair Display (serif) - headlines
-- **Body**: Inter (sans-serif) - text
+- **Display**: Anton (sans-serif) - massive bold headlines
+- **Body**: Space Grotesk (sans-serif) - tech/modern text
 
 ### Change Fonts
 **File**: `public/index.html`
@@ -59,23 +64,20 @@ This guide explains how to customize HAZTO LABEL to match your brand.
 Replace Google Fonts import (line 8):
 ```html
 <!-- Current -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
-<!-- Alternative: Lora + Roboto -->
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-<!-- Alternative: Georgia + Open Sans -->
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Alternative: Syne + Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 ```
 
-Then update CSS (in each component's style file):
+Then update CSS in `src/styles/global.css` or component files:
 ```css
-h1, h2, h3, h4 {
-  font-family: 'Lora', serif;  /* Change heading font */
+h1, h2, h3, h4, .navbar-logo {
+  font-family: 'Syne', sans-serif;  /* Change heading font */
 }
 
-body {
-  font-family: 'Roboto', sans-serif;  /* Change body font */
+body, .btn, .description {
+  font-family: 'Inter', sans-serif;  /* Change body font */
 }
 ```
 
@@ -171,22 +173,19 @@ Update product mood in `mockData.js`:
 
 ## 📸 Media & Images
 
-### Hero Section Video
+### Hero Marquee Section
 **File**: `src/components/Hero.js`
 
+The hero section uses a brutalist scrolling text marquee.
+
 ```javascript
-<video autoPlay muted loop playsInline>
-  <source 
-    src="https://videos.pexels.com/video-files/3571904/3571904-sd_640_360_25fps.mp4" 
-    type="video/mp4"
-  />
-</video>
+<div className="marquee-content">
+  <span>HAZTO LABEL // FROM CART TO CONFIDENCE // NEW COLLECTION //</span>
+  <span>HAZTO LABEL // FROM CART TO CONFIDENCE // NEW COLLECTION //</span>
+</div>
 ```
 
-Use your own video:
-```javascript
-<source src="https://your-cdn.com/your-video.mp4" type="video/mp4" />
-```
+Customize the text to display your own brand messaging.
 
 ### Community Photos
 **File**: `src/data/mockData.js`
@@ -385,23 +384,23 @@ Make grid denser:
 
 ## 🎭 Animations
 
-### Enable/Disable Animations
-**File**: `src/styles/global.css`
+### Brutalist Hover Animations
+**File**: `src/styles/product-card.css`
 
-Remove animation classes to disable:
+Brutalism relies on sharp, immediate interactions rather than smooth fades.
 ```css
-/* Comment out to disable */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.product-card:hover {
+  transform: translate(-4px, -4px); /* Sharp offset movement */
+  box-shadow: var(--shadow-lg);     /* Hard drop shadow increase */
 }
 ```
 
-### Animation Duration
+### Scrolling Marquee Speed
+**File**: `src/styles/hero.css`
 Adjust timing:
 ```css
-.product-card {
-  animation: fadeIn 0.6s ease-out;  /* Change 0.6s to your duration */
+.marquee-content {
+  animation: scroll 20s linear infinite;  /* Change 20s for speed */
 }
 ```
 
