@@ -100,10 +100,14 @@ function App() {
   };
 
   const addProduct = (newProduct) => {
+    const token = localStorage.getItem('adminToken');
     // persist via API
     fetch(`${API_BASE_URL}/api/products`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify(newProduct)
     })
     .then(r => r.json())
@@ -112,9 +116,13 @@ function App() {
   };
 
   const updateProduct = (productId, updatedData) => {
+    const token = localStorage.getItem('adminToken');
     fetch(`${API_BASE_URL}/api/products/${productId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify(updatedData)
     })
     .then(r => {
@@ -126,7 +134,11 @@ function App() {
   };
 
   const deleteProduct = (productId) => {
-    fetch(`${API_BASE_URL}/api/products/${productId}`, { method: 'DELETE' })
+    const token = localStorage.getItem('adminToken');
+    fetch(`${API_BASE_URL}/api/products/${productId}`, { 
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
       .then(r => {
         if (!r.ok) throw new Error('delete failed');
         setProducts(prev => prev.filter(p => p.id !== productId));

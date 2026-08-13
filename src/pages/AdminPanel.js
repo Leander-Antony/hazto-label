@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../App';
-import { Edit2, Trash2, Plus, Lock } from 'lucide-react';
+import { Edit2, Trash2, Plus, Lock, LogOut } from 'lucide-react';
 import '../styles/admin-panel.css';
-
-const ADMIN_CODE = 'HAZTO2024';
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -30,6 +28,13 @@ function AdminPanel() {
     mockup1: '',
     mockup2: ''
   });
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem('adminToken');
+    if (savedToken && savedToken === process.env.REACT_APP_ADMIN_CODE) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const AVAILABLE_SIZES = ['S', 'M', 'L', 'XL'];
 
@@ -162,8 +167,9 @@ function AdminPanel() {
 
   const handleCodeSubmit = (e) => {
     e.preventDefault();
-    if (code === ADMIN_CODE) {
+    if (code === process.env.REACT_APP_ADMIN_CODE) {
       setIsAuthenticated(true);
+      localStorage.setItem('adminToken', code);
       setCode('');
     } else {
       alert('Invalid code. Access denied.');
@@ -399,32 +405,45 @@ function AdminPanel() {
       <div className="admin-container">
         <div className="admin-header">
           <h1>Admin Panel</h1>
-          <button 
-            className="btn btn-primary"
-            onClick={() => {
-              setShowForm(!showForm);
-              setEditingId(null);
-                  if (!showForm) {
-                setFormData({
-                  name: '',
-                  price: '',
-                  description: '',
-                  category: 'Jerseys',
-                  mood: '',
-                  sizes: [],
-                  colors: [],
-                  featured: false,
-                  frontImage: '',
-                  backImage: '',
-                  mockup1: '',
-                  mockup2: ''
-                });
-              }
-            }}
-          >
-            <Plus size={18} />
-            {editingId ? 'Cancel Edit' : 'Add New Product'}
-          </button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button 
+              className="btn btn-outline"
+              onClick={() => {
+                localStorage.removeItem('adminToken');
+                setIsAuthenticated(false);
+              }}
+              title="Logout"
+            >
+              <LogOut size={18} />
+              Logout
+            </button>
+            <button 
+              className="btn btn-primary"
+              onClick={() => {
+                setShowForm(!showForm);
+                setEditingId(null);
+                    if (!showForm) {
+                  setFormData({
+                    name: '',
+                    price: '',
+                    description: '',
+                    category: 'Jerseys',
+                    mood: '',
+                    sizes: [],
+                    colors: [],
+                    featured: false,
+                    frontImage: '',
+                    backImage: '',
+                    mockup1: '',
+                    mockup2: ''
+                  });
+                }
+              }}
+            >
+              <Plus size={18} />
+              {editingId ? 'Cancel Edit' : 'Add New Product'}
+            </button>
+          </div>
         </div>
 
         {showForm && !editingId && (

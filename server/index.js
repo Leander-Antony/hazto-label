@@ -143,7 +143,19 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-app.post('/api/products', async (req, res) => {
+const authenticateAdmin = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Unauthorized: No token provided' });
+  }
+  const token = authHeader.split(' ')[1];
+  if (token !== process.env.ADMIN_SECRET) {
+    return res.status(403).json({ error: 'Forbidden: Invalid token' });
+  }
+  next();
+};
+
+app.post('/api/products', authenticateAdmin, async (req, res) => {
   try {
     console.log('[API] POST /api/products - body:', JSON.stringify(req.body).slice(0,200));
     await ensureInitialized();
@@ -157,7 +169,7 @@ app.post('/api/products', async (req, res) => {
   }
 });
 
-app.put('/api/products/:id', async (req, res) => {
+app.put('/api/products/:id', authenticateAdmin, async (req, res) => {
   try {
     const id = Number(req.params.id);
     console.log(`[API] PUT /api/products/${id} - body:`, JSON.stringify(req.body).slice(0,200));
@@ -174,7 +186,7 @@ app.put('/api/products/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/products/:id', async (req, res) => {
+app.delete('/api/products/:id', authenticateAdmin, async (req, res) => {
   try {
     const id = Number(req.params.id);
     console.log(`[API] DELETE /api/products/${id}`);
