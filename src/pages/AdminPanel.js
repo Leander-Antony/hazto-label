@@ -14,6 +14,8 @@ function AdminPanel() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('All');
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -384,6 +386,14 @@ function AdminPanel() {
     );
   }
 
+  const categories = ['All', ...new Set(products.map(p => p.category).filter(Boolean))];
+
+  const filteredProducts = products.filter(product => {
+    const matchesTab = activeTab === 'All' || product.category === activeTab;
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesTab && matchesSearch;
+  });
+
   return (
     <main className="admin-panel">
       <div className="admin-container">
@@ -425,10 +435,32 @@ function AdminPanel() {
 
         {/* Products Table */}
         <div className="products-table-section">
-          <h2>Products ({products.length})</h2>
+          <div className="products-table-header">
+            <h2>Products ({filteredProducts.length})</h2>
+            <div className="admin-filters">
+              <div className="category-tabs">
+                {categories.map(cat => (
+                  <button
+                    key={cat}
+                    className={`tab-btn ${activeTab === cat ? 'active' : ''}`}
+                    onClick={() => setActiveTab(cat)}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+              <input 
+                type="text" 
+                className="search-input" 
+                placeholder="Search products..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
           
-          {products.length === 0 ? (
-            <p className="no-products">No products yet. Add one to get started!</p>
+          {filteredProducts.length === 0 ? (
+            <p className="no-products">No products found.</p>
           ) : (
             <div className="products-table-wrapper">
               <table className="products-table">
@@ -444,7 +476,7 @@ function AdminPanel() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map(product => (
+                  {filteredProducts.map(product => (
                     <React.Fragment key={product.id}>
                     <tr>
                       <td>
