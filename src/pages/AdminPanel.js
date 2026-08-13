@@ -13,6 +13,7 @@ function AdminPanel() {
   const [code, setCode] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -54,6 +55,36 @@ function AdminPanel() {
       ...prev,
       colors: value.split(',').map(c => c.trim()).filter(c => c)
     }));
+  };
+
+  const handleImageUpload = async (e, fieldName) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const uploadData = new FormData();
+    uploadData.append('image', file);
+
+    try {
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=7568b20fddfbeecaef9397900228ee3a`, {
+        method: 'POST',
+        body: uploadData
+      });
+      const data = await response.json();
+      if (data.success) {
+        setFormData(prev => ({
+          ...prev,
+          [fieldName]: data.data.url
+        }));
+      } else {
+        alert('Failed to upload image: ' + data.error.message);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Failed to upload image. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -203,14 +234,18 @@ function AdminPanel() {
       </div>
 
       <div className="form-group">
-        <label>Image URL *</label>
+        <label>Front Image *</label>
         <input
-          type="text"
-          name="frontImage"
-          value={formData.frontImage}
-          onChange={handleChange}
-          placeholder="Front image URL (required)"
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e, 'frontImage')}
+          disabled={isUploading}
         />
+        {formData.frontImage && (
+          <div className="image-preview">
+            <img src={formData.frontImage} alt="Front preview" />
+          </div>
+        )}
       </div>
 
       <div className="form-group">
@@ -230,36 +265,48 @@ function AdminPanel() {
       </div>
 
       <div className="form-group">
-        <label>Back Image URL *</label>
+        <label>Back Image *</label>
         <input
-          type="text"
-          name="backImage"
-          value={formData.backImage}
-          onChange={handleChange}
-          placeholder="Back image URL (required)"
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e, 'backImage')}
+          disabled={isUploading}
         />
+        {formData.backImage && (
+          <div className="image-preview">
+            <img src={formData.backImage} alt="Back preview" />
+          </div>
+        )}
       </div>
 
       <div className="form-group">
         <label>Mockup 1 (Optional)</label>
         <input
-          type="text"
-          name="mockup1"
-          value={formData.mockup1}
-          onChange={handleChange}
-          placeholder="Mockup 1 image URL"
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e, 'mockup1')}
+          disabled={isUploading}
         />
+        {formData.mockup1 && (
+          <div className="image-preview">
+            <img src={formData.mockup1} alt="Mockup 1 preview" />
+          </div>
+        )}
       </div>
 
       <div className="form-group">
         <label>Mockup 2 (Optional)</label>
         <input
-          type="text"
-          name="mockup2"
-          value={formData.mockup2}
-          onChange={handleChange}
-          placeholder="Mockup 2 image URL"
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e, 'mockup2')}
+          disabled={isUploading}
         />
+        {formData.mockup2 && (
+          <div className="image-preview">
+            <img src={formData.mockup2} alt="Mockup 2 preview" />
+          </div>
+        )}
       </div>
 
       <div className="form-group">
@@ -285,8 +332,8 @@ function AdminPanel() {
       </div>
 
       <div className="form-actions">
-        <button type="submit" className="btn btn-primary">
-          {editingId ? 'Update Product' : 'Add Product'}
+        <button type="submit" className="btn btn-primary" disabled={isUploading}>
+          {isUploading ? 'Uploading Image...' : editingId ? 'Update Product' : 'Add Product'}
         </button>
         <button 
           type="button" 

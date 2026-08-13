@@ -13,7 +13,7 @@
 }
 
 .auth-box {
-  background: white;
+  background: var(--surface);
   padding: 50px;
   border-radius: 12px;
   box-shadow: var(--shadow-lg);
@@ -59,6 +59,8 @@
   font-family: 'Inter', sans-serif;
   letter-spacing: 2px;
   transition: border-color 0.3s ease;
+  background: transparent;
+  color: inherit;
 }
 
 .code-input:focus {
@@ -113,7 +115,7 @@
 
 /* Form Section */
 .admin-form-section {
-  background: white;
+  background: var(--surface);
   padding: 40px;
   border-radius: 12px;
   margin-bottom: 50px;
@@ -169,6 +171,8 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   transition: border-color 0.3s ease;
+  background: transparent;
+  color: inherit;
 }
 
 .form-group input:focus,
@@ -200,7 +204,7 @@
 
 /* Products Table Section */
 .products-table-section {
-  background: white;
+  background: var(--surface);
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -378,4 +382,28 @@
     padding: 10px;
     font-size: 0.8rem;
   }
+}
+
+/* Image Upload Preview */
+.image-preview {
+  margin-top: 15px;
+  width: 100%;
+  max-width: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px dashed var(--border-light);
+  padding: 5px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+input[type="file"] {
+  padding: 10px;
+  background: var(--primary-light);
+  cursor: pointer;
 }
