@@ -36,7 +36,7 @@ function Navbar({ cartCount }) {
       <div className="navbar-container">
         
         <Link to="/" className="navbar-logo">
-          <img src="/hazto-label-logo.png" alt="HAZTO LABEL" className="navbar-logo-image" />
+          <img src="/hazto-label-logo-zoomed.png" alt="HAZTO LABEL" className="navbar-logo-image" />
         </Link>
         
         <PillNav
