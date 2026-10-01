@@ -16,6 +16,15 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [showNotification, setShowNotification] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [zoomStyle, setZoomStyle] = useState({ transformOrigin: 'center center' });
+  const [isZooming, setIsZooming] = useState(false);
+
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setZoomStyle({ transformOrigin: `${x}% ${y}%` });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -61,8 +70,17 @@ function ProductDetail() {
           
           {/* LEFT: IMAGES */}
           <div className="classic-image-col">
-            <div className="main-image">
-              <img src={product.images?.[selectedImageIndex] || product.image} alt={product.name} />
+            <div 
+              className="main-image"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsZooming(true)}
+              onMouseLeave={() => setIsZooming(false)}
+            >
+              <img 
+                src={product.images?.[selectedImageIndex] || product.image} 
+                alt={product.name} 
+                style={isZooming ? { ...zoomStyle, transform: 'scale(1.8)', transition: 'transform 0.1s ease-out' } : { transform: 'scale(1)', transition: 'transform 0.2s ease-out' }}
+              />
               <div className="mood-badge">{product.mood}</div>
             </div>
             {product.images && product.images.length > 1 && (
@@ -122,7 +140,7 @@ function ProductDetail() {
             <div className="action-buttons">
               <button className="btn btn-primary full-width" onClick={handleAddToCart}>
                 <ShoppingBag size={20} strokeWidth={2.5} />
-                [ ACQUIRE ITEM ]
+                [ ADD TO CART ]
               </button>
               <button className="btn btn-outline full-width" onClick={handleWhatsApp}>
                 <MessageCircle size={20} strokeWidth={2.5} />

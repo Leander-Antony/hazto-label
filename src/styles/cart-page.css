@@ -53,7 +53,7 @@
 
 .cart-item {
   display: grid;
-  grid-template-columns: 100px 1fr 100px 120px 50px;
+  grid-template-columns: 120px 1fr 100px 120px 50px;
   gap: 20px;
   align-items: center;
   background: var(--surface);
@@ -68,8 +68,8 @@
 }
 
 .item-image {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 140px;
   border-radius: 8px;
   overflow: hidden;
 }

@@ -47,7 +47,7 @@
 
 @media (min-width: 900px) {
   .classic-split-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
   }
 }
 
@@ -94,8 +94,8 @@
 }
 
 .thumbnail {
-  flex: 0 0 100px;
-  height: 100px;
+  flex: 0 0 120px;
+  height: 120px;
   border: var(--border-thick);
   background: var(--surface);
   cursor: pointer;
@@ -324,7 +324,7 @@
 
 .related-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 40px;
 }
 
