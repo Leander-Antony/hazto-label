@@ -56,7 +56,7 @@
   border: 2px solid var(--border-light);
   border-radius: 8px;
   font-size: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   letter-spacing: 2px;
   transition: border-color 0.3s ease;
   background: transparent;
@@ -168,7 +168,7 @@
   padding: 12px 15px;
   border: 1px solid var(--border-light);
   border-radius: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.95rem;
   transition: border-color 0.3s ease;
   background: transparent;
@@ -462,7 +462,7 @@ input[type="file"] {
   border-radius: 8px;
   background: transparent;
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   min-width: 250px;
   transition: border-color 0.3s ease;
 }
